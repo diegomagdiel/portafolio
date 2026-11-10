@@ -223,6 +223,41 @@ a.card:hover{border-color:var(--fg-2);transform:translateY(-2px)}
 .cat.ml{color:var(--ml);background:var(--ml-soft)}
 .ill .p{fill:var(--ml)} .ill .ps{stroke:var(--ml)} .ill .tp{fill:var(--ml);font-family:var(--mono);font-size:12px;font-weight:500}
 .case .note{color:var(--muted);font-size:14px;border-left:2px solid var(--ml);padding-left:12px}
+/* ruta del diplomado */
+.ruta{margin:0 0 36px}
+.ruta-head{display:flex;justify-content:space-between;align-items:baseline;gap:8px 16px;flex-wrap:wrap;margin-bottom:14px}
+.ruta-head h2{font-size:22px}
+.ruta-leg{display:flex;gap:14px;font-size:12.5px;color:var(--muted)}
+.ruta ol{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px}
+.ruta li{background:var(--surface);border:1px solid var(--line);border-top:3px solid var(--line);border-radius:var(--radius);padding:12px 14px 14px;display:flex;flex-direction:column;gap:7px;min-width:0}
+.ruta li.done{border-top-color:var(--ml)}
+.ruta .mod{font-family:var(--mono);font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
+.ruta b{font-size:14.5px;line-height:1.3}
+.ruta .pj,.ruta-leg span{font-size:13px;color:var(--fg-2);display:flex;gap:7px;align-items:baseline;line-height:1.35}
+.ruta .pj::before,.ruta-leg span::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--muted);flex:none;transform:translateY(-1px)}
+.ruta .ok::before{background:var(--ok)} .ruta .wip::before{background:var(--copper)}
+.ruta .teo::before{display:none} .ruta .teo{color:var(--muted)}
+.ruta a.pj{color:var(--fg);text-decoration:underline;text-decoration-color:var(--ml);text-underline-offset:3px}
+@media (max-width:900px){.ruta ol{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:520px){.ruta ol{grid-template-columns:1fr}}
+/* demo interactiva del rotor */
+.demo{margin:32px 0;padding:20px;border:1px solid var(--line);border-top:3px solid var(--ml);border-radius:var(--radius);background:var(--surface);min-width:0}
+.demo > h2{margin-top:0}
+.demo h3{font-size:18px;margin:26px 0 6px}
+.demo p{color:var(--fg-2)}
+.demo canvas{display:block;width:100%;border:1px solid var(--line);border-radius:8px;background:var(--bg)}
+#demo-mapa{cursor:crosshair;touch-action:manipulation}
+.demo-ctrl{display:flex;flex-wrap:wrap;gap:10px 18px;align-items:center;margin:12px 0 6px;font-size:14px;color:var(--fg-2)}
+.demo-ctrl label{display:flex;align-items:center;gap:10px}
+.demo-ctrl input[type=range]{accent-color:var(--ml);width:150px}
+.demo-ctrl b{font-family:var(--mono);color:var(--fg);font-weight:500;min-width:2ch}
+.demo-leg{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:13px;color:var(--fg-2)}
+.demo-leg i{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:6px;vertical-align:-1px}
+.demo-res{min-height:1.6em;font-size:15px;margin:10px 0 0;color:var(--fg)}
+.demo-btns{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}
+.demo-btns .btn{padding:8px 14px;font-size:13.5px}
+.demo-btns .btn.primary{background:var(--ml);border-color:var(--ml);color:var(--ink-on-accent)}
+.demo-stats{font-family:var(--mono);font-size:12.5px;color:var(--fg-2);margin-top:8px;font-variant-numeric:tabular-nums;line-height:1.7}
 .folder:hover{transform:translateY(-3px);border-color:var(--accent-f);box-shadow:0 24px 60px -32px var(--accent-f)}
 .folder .art{aspect-ratio:16/9;max-width:100%;overflow:hidden;border-bottom:1px solid var(--line);border-radius:0 var(--radius) 0 0;background:var(--bg)}
 .folder .art svg{display:block;width:100%;height:100%}
@@ -784,6 +819,16 @@ figcaption{font-size:13px;color:var(--muted);padding:10px 14px;border-top:1px so
 </svg></div>
   </div>
   <p style="color:var(--muted);font-size:14px;margin:-18px 0 28px">Los trabajos originales del diplomado se están reconstruyendo desde cero en Python, con código reproducible y sin datos confidenciales de empresas.</p>
+  <div class="ruta">
+    <div class="ruta-head"><h2>Ruta del diplomado</h2><div class="ruta-leg"><span class="ok">Terminado</span><span class="wip">En reconstrucción</span></div></div>
+    <ol>
+      <li><span class="mod">Módulo 1</span><b>Fundamentos e Industria 4.0</b><span class="pj teo">IoT, transformación digital y ciberseguridad. Trabajos teóricos.</span></li>
+      <li class="done"><span class="mod">Módulo 2</span><b>Señales y machine learning</b><a class="pj ok" href="#rodamientos">① Features en rodamientos</a><a class="pj ok" href="#grietas-rotor">② Grietas en rotor</a></li>
+      <li><span class="mod">Módulo 3</span><b>Diagnóstico, pronóstico y anomalías</b><span class="pj wip">③ Análisis de aceite</span><span class="pj wip">④ Etano en GNL</span><span class="pj wip">⑤ Bomba de relave</span></li>
+      <li><span class="mod">Módulo 4</span><b>Talleres e infraestructura Big Data</b><span class="pj wip">⑥ Vida útil de turbina</span><span class="pj wip">⑦ Anomalías en chancador</span></li>
+      <li><span class="mod">Módulo 5</span><b>Proyecto final</b><span class="pj wip">⑧ Culatas de motores a gas</span></li>
+    </ol>
+  </div>
   <div class="grid" style="padding-bottom:64px"><a class="card" href="#rodamientos">
           <div class="thumb"><img src="img/ml/rod-portada.jpg" alt="Espectrogramas de vibración de un rodamiento normal y con fallas en pista interna y externa"></div>
           <div class="body">
@@ -799,7 +844,7 @@ figcaption{font-size:13px;color:var(--muted);padding:10px 14px;border-top:1px so
             <div class="tagrow"><span class="cat ml">Clasificación</span><span class="status ok">Terminado</span></div>
             <h3>Clasificación de grietas en un rotor</h3>
             <p>KNN, árbol de decisión, Random Forest y SVM para detectar si un álabe tiene una grieta y de qué tipo, comparados con validación cruzada y una prueba apartada.</p>
-            <div class="tools"><span>Python</span><span>scikit-learn</span><span>pandas</span><span>seaborn</span></div>
+            <div class="tools"><span>Python</span><span>scikit-learn</span><span>pandas</span><span>Demo interactiva</span></div>
             <div class="metrics"><div><b>89 %</b><span>Random Forest</span></div><div><b>4</b><span>modelos</span></div><div><b>92</b><span>mediciones</span></div></div>
           </div>
         </a><div class="card">
@@ -851,6 +896,8 @@ figcaption{font-size:13px;color:var(--muted);padding:10px 14px;border-top:1px so
       <figure><img src="img/ml/rod-pca.png" alt="Proyecciones PCA, Kernel PCA y LDA de los cinco estados" loading="lazy"><figcaption>Kernel PCA separa, sin conocer las etiquetas, estados que PCA mezcla.</figcaption></figure>
       <h2>Un indicador engañoso</h2>
       <p>La <strong>media</strong> de la señal parecía separar perfecto los estados, pero solo porque cada grabación tiene un offset eléctrico distinto: identificaba el archivo, no la falla. Lo detecté y lo dejé fuera del análisis.</p>
+      <h2>Qué significa para mantenimiento</h2>
+      <p>La energía por bandas de frecuencia es barata de calcular y se puede seguir en línea con un acelerómetro. Un indicador así permite detectar una falla en el rodamiento y saber <strong>dónde está</strong> (pista interna, externa o bolas) antes de que el equipo se detenga. Con esa información, el cambio se puede programar en una detención planificada en vez de hacerlo como una correctiva.</p>
       <h2>Mejoras respecto al trabajo original (2022)</h2>
       <ul>
         <li>Submuestreo con filtro anti-aliasing en vez de tomar uno de cada 20 puntos.</li>
@@ -895,10 +942,27 @@ figcaption{font-size:13px;color:var(--muted);padding:10px 14px;border-top:1px so
       </ul>
       <figure><img src="img/ml/rotor-azar.png" alt="Histograma de exactitudes de KNN con 300 separaciones al azar, entre 71 % y 100 %" loading="lazy"><figcaption>La trampa del azar: el mismo modelo con 300 separaciones distintas.</figcaption></figure>
       <figure><img src="img/ml/rotor-fronteras.png" alt="Fronteras de decisión de KNN, árbol de decisión, Random Forest y SVM" loading="lazy"><figcaption>Cada modelo divide el espacio a su manera: vecinos, escalones, escalones suavizados y curvas.</figcaption></figure>
+      <section class="demo" id="demo-rotor" aria-labelledby="demo-titulo">
+        <h2 id="demo-titulo">Pruébalo tú</h2>
+        <p>Estos son los <strong>92 puntos reales</strong> del proyecto, proyectados a 2D con LDA como en la figura anterior. El fondo muestra lo que predice un KNN entrenado con ellos. <strong>Toca el mapa</strong> para ubicar una medición nueva y ver qué estado predice y cuáles son sus vecinos.</p>
+        <div class="demo-leg" aria-hidden="true"><span><i style="background:#2a9d8f"></i>Sin daño</span><span><i style="background:#e9c46a"></i>Grieta 1</span><span><i style="background:#f4a261"></i>Grieta 4</span><span><i style="background:#e76f51"></i>Grieta 6</span></div>
+        <div class="demo-ctrl"><label for="demo-k">Vecinos (k) <input type="range" id="demo-k" min="1" max="25" step="1" value="5"> <b id="demo-k-val">5</b></label></div>
+        <canvas id="demo-mapa" tabindex="0" role="img" aria-label="Mapa de los 92 puntos del rotor coloreados por estado, con las zonas que predice el modelo KNN. Haz clic o usa las flechas para mover la medición nueva."></canvas>
+        <p class="demo-res" id="demo-res" aria-live="polite"></p>
+        <p style="font-size:13.5px;color:var(--muted);margin:6px 0 0">Prueba con k = 1: el fondo se llena de islas que siguen a cada punto (sobreajuste). Con k = 25, las fronteras se suavizan tanto que empiezan a ignorar los detalles (subajuste).</p>
+
+        <h3>La trampa del azar</h3>
+        <p>Cada clic separa los 92 puntos al azar en 64 de entrenamiento y 28 de prueba, entrena un KNN (k = 5) con los 3 componentes y mide su exactitud, igual que en el notebook. Repite varias veces y mira cuánto cambia el resultado del mismo modelo.</p>
+        <div class="demo-btns"><button type="button" class="btn primary" id="demo-1">Separar 1 vez</button><button type="button" class="btn" id="demo-100">Separar 100 veces</button><button type="button" class="btn" id="demo-reset">Reiniciar</button></div>
+        <canvas id="demo-hist" role="img" aria-label="Histograma de las exactitudes obtenidas en cada separación al azar"></canvas>
+        <div class="demo-stats" id="demo-stats" aria-live="polite">Aún no hay separaciones.</div>
+      </section>
       <h2>Resultado</h2>
       <p>Tres modelos empatan cerca del 90 %: <strong>SVM lineal, KNN y Random Forest</strong> quedan dentro del margen de error entre sí. El árbol de decisión es el menos preciso y el menos estable. El error más común es confundir la <strong>grieta 4 con la grieta 6</strong>, los dos estados que se superponen.</p>
       <figure><img src="img/ml/rotor-comparacion.png" alt="Comparación de exactitud de los cuatro modelos en validación cruzada y prueba apartada" loading="lazy"><figcaption>Validación cruzada contra prueba apartada para los cuatro modelos.</figcaption></figure>
       <figure><img src="img/ml/rotor-confusion.png" alt="Matrices de confusión de los cuatro modelos" loading="lazy"><figcaption>Matrices de confusión: el error más frecuente es grieta 4 contra grieta 6.</figcaption></figure>
+      <h2>Qué significa para mantenimiento</h2>
+      <p>Antes de usar un modelo para decidir una detención, hay que saber cuánto varía su exactitud: un 100 % obtenido con una sola separación de los datos puede ser suerte. Además, no todos los errores pesan igual. Confundir la grieta 4 con la grieta 6 importa menos si ambas llevan a la misma acción, que es inspeccionar el álabe. Lo crítico sería confundir una grieta con un rotor sano, y por eso la matriz de confusión dice más que la exactitud sola.</p>
       <h2>Mejoras respecto al trabajo original (2022)</h2>
       <ul>
         <li>Validación cruzada estratificada y repetida en vez de un split al azar sin semilla.</li>
@@ -1113,6 +1177,103 @@ figcaption{font-size:13px;color:var(--muted);padding:10px 14px;border-top:1px so
   }
   function check(){ if(!area.hidden) start(); }
   window.addEventListener('hashchange',function(){setTimeout(check,30);}); check();
+})();
+</script>
+
+<script>
+/* Demo del rotor: datos reales de clasificacion-grietas-rotor (componentes 1-3, proyección LDA 2D, estado) */
+(function(){
+  var root=document.getElementById('demo-rotor'); if(!root) return;
+  var D=[[0.2547,0.2998,0.2332,-1.534,0.754,0],[-0.0711,0.4077,0.3661,-1.137,1.583,0],[-0.0716,0.4434,0.3529,-1.209,1.535,0],[0.3193,0.1848,0.3657,-1.533,1.213,0],[0.2535,0.2265,0.1372,-1.269,0.36,0],[0.2617,0.2293,0.2745,-1.42,0.904,0],[0.282,0.1747,0.3506,-1.407,1.183,0],[-0.0255,0.3188,0.0592,-0.755,0.303,0],[-0.1683,0.5104,-0.0629,-0.762,-0.036,0],[0.347,0.0827,0.3268,-1.32,1.019,0],[0.5059,0.1107,0.0326,-1.499,-0.292,0],[0.257,0.2907,0.2304,-1.515,0.739,0],[0.1829,0.2678,0.1619,-1.222,0.526,0],[-0.0609,0.563,0.1739,-1.358,0.826,0],[0.3837,0.0544,0.1885,-1.214,0.43,0],[-0.1469,0.4439,-0.1305,-0.594,-0.335,0],[0.165,0.4404,0.2576,-1.679,0.948,0],[0.3959,0.1368,0.3006,-1.542,0.88,0],[0.4368,-0.0156,-0.0258,-0.98,-0.484,0],[0.4406,0.1021,0.2341,-1.505,0.57,0],[0.538,-0.0704,-0.0427,-1.075,-0.646,0],[0.4847,-0.0633,0.0782,-1.074,-0.115,0],[0.1374,0.3293,0.2517,-1.342,0.934,0],[0.1019,0.1333,-0.2539,-0.332,-1.087,1],[0.3212,-0.0488,-0.111,-0.548,-0.729,1],[0.4221,-0.1807,-0.0861,-0.496,-0.735,1],[0.0081,0.1042,0.0543,-0.318,0.224,1],[0.5516,-0.2061,-0.284,-0.564,-1.643,1],[0.57,-0.1847,-0.2114,-0.725,-1.365,1],[-0.2179,0.3477,-0.2116,-0.121,-0.611,1],[0.4664,-0.0588,-0.1094,-0.871,-0.85,1],[0.5768,-0.2069,-0.0837,-0.804,-0.863,1],[0.4838,-0.1289,-0.1415,-0.716,-1.003,1],[0.0196,0.25,-0.0557,-0.594,-0.206,1],[0.5627,-0.1398,-0.2123,-0.814,-1.356,1],[0.5048,-0.1394,0.1269,-0.984,0.052,1],[0.2464,0.1362,-0.107,-0.816,-0.623,1],[0.3813,-0.0926,-0.3691,-0.353,-1.821,1],[0.501,-0.1178,-0.3176,-0.624,-1.722,1],[-0.0323,0.342,-0.1741,-0.584,-0.622,1],[-0.1749,0.4256,-0.1902,-0.429,-0.552,1],[0.4969,-0.1384,-0.3783,-0.51,-1.964,1],[0.4938,-0.104,-0.3516,-0.609,-1.85,1],[-0.1998,0.3875,-0.2187,-0.253,-0.65,1],[0.4427,-0.1548,-0.1568,-0.543,-1.032,1],[0.4852,-0.1533,-0.3106,-0.508,-1.685,1],[-0.3623,-0.0351,0.1665,0.795,0.975,2],[-0.0788,-0.1855,0.3283,0.333,1.357,2],[-0.099,-0.3815,0.402,0.783,1.643,2],[-0.2871,-0.0595,0.1623,0.678,0.89,2],[-0.3449,-0.0706,0.3565,0.666,1.716,2],[-0.1269,-0.4679,0.277,1.168,1.155,2],[-0.2716,-0.0602,0.1865,0.621,0.974,2],[-0.4288,-0.1151,0.2586,1.061,1.391,2],[0.0449,-0.3318,0.2846,0.427,1.056,2],[-0.0544,-0.4761,0.3821,0.92,1.512,2],[-0.4072,-0.0593,0.0683,1.048,0.618,2],[-0.2401,0.1094,-0.0368,0.343,0.076,2],[-0.3698,-0.1254,0.1892,1.008,1.061,2],[-0.0393,-0.2282,0.3439,0.326,1.38,2],[-0.2116,0.2125,-0.1607,0.141,-0.431,2],[-0.1977,-0.2876,0.4212,0.776,1.818,2],[-0.1979,-0.2729,0.3017,0.849,1.342,2],[-0.2663,-0.3167,0.4307,1.0,1.912,2],[-0.3859,0.0251,0.2196,0.659,1.217,2],[-0.373,-0.2611,0.2362,1.297,1.233,2],[-0.2332,0.1046,-0.0313,0.333,0.091,2],[-0.4211,0.074,-0.0311,0.853,0.25,2],[-0.2383,-0.3583,0.0838,1.347,0.493,2],[-0.2765,-0.0918,-0.2774,1.128,-0.884,3],[-0.3546,0.1262,-0.3471,0.856,-1.066,3],[-0.4888,0.0288,-0.2638,1.333,-0.629,3],[-0.3433,0.1833,-0.2852,0.637,-0.82,3],[-0.3405,0.0064,-0.2117,0.986,-0.552,3],[-0.3799,-0.2586,-0.0998,1.612,-0.106,3],[-0.0912,-0.3775,-0.1766,1.278,-0.68,3],[-0.4054,-0.0785,-0.173,1.308,-0.353,3],[-0.3235,0.2285,-0.3085,0.503,-0.924,3],[-0.3038,0.2215,-0.28,0.447,-0.828,3],[-0.4817,-0.1293,-0.0438,1.494,0.224,3],[-0.3615,0.0938,-0.0892,0.716,-0.032,3],[-0.1236,-0.3755,-0.0396,1.226,-0.103,3],[-0.004,-0.4468,0.0319,1.047,0.07,3],[-0.353,-0.0599,-0.218,1.18,-0.575,3],[-0.4305,-0.0959,-0.3452,1.565,-1.022,3],[0.0491,-0.4583,-0.2098,1.167,-0.945,3],[-0.3379,-0.0816,-0.4034,1.364,-1.334,3],[-0.1492,-0.3893,-0.2547,1.515,-0.944,3],[-0.4428,-0.0828,-0.0685,1.313,0.098,3],[-0.062,-0.2794,-0.094,0.899,-0.361,3],[-0.1397,0.165,-0.1856,0.106,-0.6,3],[-0.0247,-0.2358,-0.365,0.952,-1.472,3]];
+  var NAMES=['Sin daño','Grieta 1','Grieta 4','Grieta 6'], COL=['#2a9d8f','#e9c46a','#f4a261','#e76f51'];
+  var X0=-2.4,X1=2.4,Y0=-2.5,Y1=2.5;
+  var map=document.getElementById('demo-mapa'), kIn=document.getElementById('demo-k'), kOut=document.getElementById('demo-k-val'), res=document.getElementById('demo-res');
+  var hist=document.getElementById('demo-hist'), stats=document.getElementById('demo-stats');
+  var q=[0.25,0.2], bg=null, bgKey='', accs=[];
+  function css(v){return getComputedStyle(document.documentElement).getPropertyValue(v).trim()||'#888';}
+  function vote(dists,k){ // dists: [[d,cls],...] ordenados
+    var v=[0,0,0,0],s=[0,0,0,0];
+    for(var i=0;i<k;i++){v[dists[i][1]]++;s[dists[i][1]]+=dists[i][0];}
+    var b=0; for(var c=1;c<4;c++){if(v[c]>v[b]||(v[c]===v[b]&&s[c]<s[b]))b=c;}
+    return {c:b,v:v[b]};
+  }
+  function knn2(x,y,k){
+    var d=D.map(function(p,i){var dx=p[3]-x,dy=p[4]-y;return [dx*dx+dy*dy,p[5],i];});
+    d.sort(function(a,b){return a[0]-b[0];});
+    var r=vote(d,k); r.nb=d.slice(0,k).map(function(e){return e[2];}); return r;
+  }
+  function size(cv,ratio,max){
+    var w=cv.clientWidth; if(!w) return null; var h=Math.round(Math.min(w*ratio,max));
+    var dpr=Math.min(window.devicePixelRatio||1,2);
+    if(cv.width!==Math.round(w*dpr)||cv.height!==Math.round(h*dpr)){cv.width=Math.round(w*dpr);cv.height=Math.round(h*dpr);cv.style.height=h+'px';}
+    var ctx=cv.getContext('2d'); ctx.setTransform(dpr,0,0,dpr,0,0); return {ctx:ctx,w:w,h:h,dpr:dpr};
+  }
+  function px(x,w){return (x-X0)/(X1-X0)*w;} function py(y,h){return h-(y-Y0)/(Y1-Y0)*h;}
+  function drawMap(){
+    var s=size(map,.8,460); if(!s) return; var ctx=s.ctx,w=s.w,h=s.h,k=+kIn.value;
+    var key=[w,h,k,css('--bg')].join('|');
+    if(key!==bgKey){
+      bg=document.createElement('canvas'); bg.width=map.width; bg.height=map.height;
+      var b=bg.getContext('2d'); b.setTransform(s.dpr,0,0,s.dpr,0,0);
+      b.fillStyle=css('--bg'); b.fillRect(0,0,w,h); b.globalAlpha=.3;
+      var cell=5;
+      for(var gx=0;gx<w;gx+=cell){for(var gy=0;gy<h;gy+=cell){
+        var x=X0+(gx+cell/2)/w*(X1-X0), y=Y1-(gy+cell/2)/h*(Y1-Y0);
+        b.fillStyle=COL[knn2(x,y,k).c]; b.fillRect(gx,gy,cell,cell);}}
+      b.globalAlpha=1; bgKey=key;
+    }
+    ctx.setTransform(1,0,0,1,0,0); ctx.drawImage(bg,0,0); ctx.setTransform(s.dpr,0,0,s.dpr,0,0);
+    var r=knn2(q[0],q[1],k), qx=px(q[0],w), qy=py(q[1],h);
+    ctx.strokeStyle=css('--fg'); ctx.globalAlpha=.55; ctx.lineWidth=1.2;
+    r.nb.forEach(function(i){ctx.beginPath();ctx.moveTo(qx,qy);ctx.lineTo(px(D[i][3],w),py(D[i][4],h));ctx.stroke();});
+    ctx.globalAlpha=1;
+    var bgc=css('--bg');
+    D.forEach(function(p,i){ctx.beginPath();ctx.arc(px(p[3],w),py(p[4],h),r.nb.indexOf(i)>=0?5.5:4.2,0,7);ctx.fillStyle=COL[p[5]];ctx.fill();ctx.lineWidth=1.2;ctx.strokeStyle=bgc;ctx.stroke();});
+    ctx.beginPath();ctx.arc(qx,qy,9,0,7);ctx.fillStyle=COL[r.c];ctx.fill();ctx.lineWidth=3;ctx.strokeStyle=css('--fg');ctx.stroke();
+    ctx.fillStyle=css('--fg-2'); ctx.font='11px '+css('--mono'); ctx.fillText('LDA 1 →',w-58,h-8); ctx.save(); ctx.translate(14,58); ctx.rotate(-Math.PI/2); ctx.fillText('LDA 2 →',0,0); ctx.restore();
+    res.innerHTML='Predicción: <strong style="background:'+COL[r.c]+';color:#1b1b1b;padding:1px 8px;border-radius:4px">'+NAMES[r.c]+'</strong> · '+r.v+' de '+k+' vecinos votan por ese estado.';
+  }
+  function setQ(e){var b=map.getBoundingClientRect(); q=[X0+(e.clientX-b.left)/b.width*(X1-X0), Y1-(e.clientY-b.top)/b.height*(Y1-Y0)]; drawMap();}
+  map.addEventListener('click',setQ);
+  map.addEventListener('keydown',function(e){var st=.1,m={ArrowLeft:[-st,0],ArrowRight:[st,0],ArrowUp:[0,st],ArrowDown:[0,-st]}[e.key];
+    if(m){e.preventDefault();q=[Math.max(X0,Math.min(X1,q[0]+m[0])),Math.max(Y0,Math.min(Y1,q[1]+m[1]))];drawMap();}});
+  kIn.addEventListener('input',function(){kOut.textContent=kIn.value;drawMap();});
+  // trampa del azar: KNN k=5 sobre los 3 componentes, 28 de prueba
+  function split(){
+    var idx=D.map(function(_,i){return i;});
+    for(var i=idx.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=idx[i];idx[i]=idx[j];idx[j]=t;}
+    var te=idx.slice(0,28), tr=idx.slice(28), ok=0;
+    te.forEach(function(a){var p=D[a];
+      var d=tr.map(function(b){var o=D[b];var d0=p[0]-o[0],d1=p[1]-o[1],d2=p[2]-o[2];return [d0*d0+d1*d1+d2*d2,o[5]];});
+      d.sort(function(x,y){return x[0]-y[0];}); if(vote(d,5).c===p[5]) ok++;});
+    accs.push(ok);
+  }
+  function pct(n){return Math.round(n/28*100)+' %';}
+  function drawHist(){
+    var s=size(hist,.32,170); if(!s) return; var ctx=s.ctx,w=s.w,h=s.h;
+    ctx.fillStyle=css('--bg'); ctx.fillRect(0,0,w,h);
+    var lo=16, n=28-lo+1, cnt=new Array(n).fill(0); accs.forEach(function(a){cnt[Math.max(a,lo)-lo]++;});
+    var mx=Math.max(1,Math.max.apply(null,cnt)), pad=24, bw=(w-16)/n, last=accs.length?accs[accs.length-1]:-1;
+    ctx.font='10.5px '+css('--mono'); ctx.textAlign='center';
+    for(var i=0;i<n;i++){var bh=(h-pad-12)*cnt[i]/mx, x=8+i*bw;
+      ctx.fillStyle=(i+lo===last)?css('--ml'):css('--fg-2'); ctx.globalAlpha=(i+lo===last)?1:.55;
+      if(cnt[i]) ctx.fillRect(x+2,h-pad-bh,bw-4,bh); ctx.globalAlpha=1;
+      if((i+lo)%2===0){ctx.fillStyle=css('--muted');ctx.fillText(pct(i+lo),x+bw/2,h-8);}}
+    if(!accs.length){ctx.fillStyle=css('--muted');ctx.fillText('Pulsa "Separar 1 vez"',w/2,h/2);}
+    ctx.textAlign='start';
+    if(accs.length){var mn=Math.min.apply(null,accs),mxa=Math.max.apply(null,accs),av=accs.reduce(function(a,b){return a+b;},0)/accs.length;
+      stats.textContent='Separaciones: '+accs.length+' · última: '+pct(last)+' · mínimo: '+pct(mn)+' · máximo: '+pct(mxa)+' · promedio: '+pct(av);}
+    else stats.textContent='Aún no hay separaciones.';
+  }
+  document.getElementById('demo-1').addEventListener('click',function(){split();drawHist();});
+  document.getElementById('demo-100').addEventListener('click',function(){for(var i=0;i<100;i++)split();drawHist();});
+  document.getElementById('demo-reset').addEventListener('click',function(){accs=[];drawHist();});
+  function all(){bgKey='';drawMap();drawHist();}
+  var t; window.addEventListener('resize',function(){clearTimeout(t);t=setTimeout(all,120);});
+  window.addEventListener('hashchange',function(){setTimeout(all,40);});
+  new MutationObserver(function(){setTimeout(all,30);}).observe(document.documentElement,{attributes:true,attributeFilter:['data-skin','data-theme']});
+  try{window.matchMedia('(prefers-color-scheme: light)').addEventListener('change',all);}catch(e){}
+  all();
 })();
 </script>
 
