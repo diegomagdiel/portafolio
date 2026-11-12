@@ -836,7 +836,7 @@ figcaption{font-size:13px;color:var(--muted);padding:10px 14px;border-top:1px so
             <h3>Extracción de features en rodamientos</h3>
             <p>Qué indicadores de la vibración permiten distinguir 5 estados de salud de un rodamiento: tiempo, frecuencia y espectrogramas, más PCA, Kernel PCA y LDA.</p>
             <div class="tools"><span>Python</span><span>SciPy</span><span>scikit-learn</span><span>pandas</span></div>
-            <div class="metrics"><div><b>100 %</b><span>con frecuencia</span></div><div><b>86 %</b><span>con tiempo</span></div><div><b>5</b><span>estados</span></div></div>
+            <div class="metrics"><div><b>97 %</b><span>con frecuencia</span></div><div><b>83 %</b><span>con tiempo</span></div><div><b>5</b><span>estados</span></div></div>
           </div>
         </a><a class="card" href="#grietas-rotor">
           <div class="thumb"><img src="img/ml/rotor-portada.jpg" alt="Fronteras de decisión de KNN y árbol de decisión para cuatro estados de un rotor"></div>
@@ -873,43 +873,48 @@ figcaption{font-size:13px;color:var(--muted);padding:10px 14px;border-top:1px so
   <h1>Extracción de features en rodamientos</h1>
   <p class="lead">Un rodamiento con una grieta genera un impacto cada vez que un elemento rodante pasa por el defecto. La pregunta es qué indicadores calculados a partir de la vibración permiten distinguir cinco estados de salud.</p>
   <div class="kpis">
-    <div><b>100 %</b><span>exactitud con bandas de frecuencia</span></div>
-    <div><b>86 %</b><span>exactitud con indicadores temporales</span></div>
+    <div><b>34 de 35</b><span>aciertos con bandas de frecuencia (97 %)</span></div>
+    <div><b>29 de 35</b><span>aciertos con indicadores temporales (83 %)</span></div>
+    <div><b>8 de 35</b><span>con la velocidad sola (control)</span></div>
     <div><b>5</b><span>estados de salud</span></div>
-    <div><b>200 kHz</b><span>frecuencia de muestreo</span></div>
   </div>
   <div class="case-grid">
     <div class="prose">
       <h2>El problema</h2>
-      <p>Hay cinco grabaciones de un acelerómetro, una por estado: rodamiento normal, falla en la pista interna, en la pista externa, en las bolas y falla combinada. Cada una dura 10 segundos a 200 kHz con velocidad variable, del dataset público de la Universidad de Ottawa (Huang y Baddour, 2018).</p>
+      <p>Hay cinco grabaciones de un acelerómetro, una por estado: rodamiento normal, falla en la pista interna, en la pista externa, en las bolas y falla combinada. Cada una dura 10 segundos a 200 kHz mientras el eje acelera y frena, del dataset público de la Universidad de Ottawa (Huang y Baddour, 2018).</p>
       <h2>Lo que hice</h2>
       <ul>
-        <li>Bajé la señal a 10 kHz con un <strong>filtro anti-aliasing</strong> y la corté en ventanas de 0,5 s con traslape.</li>
-        <li>Calculé indicadores en tres dominios: <strong>temporales</strong> (RMS, pico, factor de cresta, curtosis), <strong>energía por bandas de frecuencia</strong> con FFT y <strong>espectrogramas</strong> (STFT).</li>
-        <li>Medí cuánto separa cada indicador con el <strong>Fisher score</strong> y reduje dimensiones con <strong>PCA, Kernel PCA y LDA</strong>.</li>
-        <li>Entrené un clasificador LDA con los primeros 7 s de cada grabación y lo probé con los últimos 3 s, que no había visto.</li>
+        <li>Bajé la señal a 10 kHz con un <strong>filtro anti-aliasing</strong>.</li>
+        <li>Separé <strong>antes de todo</strong> los primeros 7 s para entrenar y los últimos 3 s para probar, y recién después corté cada bloque en ventanas de 0,5 s. Toda la exploración se hizo solo con el entrenamiento.</li>
+        <li>Calculé indicadores en tres dominios: <strong>temporales</strong> (RMS, pico, factor de cresta, curtosis), <strong>energía por bandas de frecuencia</strong> con FFT y ventana Hann, y <strong>espectrogramas</strong>.</li>
+        <li>Medí la <strong>velocidad del eje</strong> con el encoder y la usé como control: si la velocidad sola adivinara el estado, los resultados no serían confiables.</li>
+        <li>Comparé siete conjuntos de indicadores con un clasificador LDA e informé cada resultado con su margen de error.</li>
       </ul>
       <h2>Resultado</h2>
-      <p>Con 8 bandas de energía, el clasificador acierta el <strong>100 %</strong> de las ventanas no vistas; con los indicadores temporales llega al <strong>86 %</strong>. En los espectrogramas, las fallas de pista interna, pista externa y combinada muestran impactos periódicos que no aparecen en el rodamiento sano.</p>
-      <figure><img src="img/ml/rod-exactitud.png" alt="Gráfico de exactitud: 100 % con bandas de frecuencia y 86 % con indicadores temporales" loading="lazy"><figcaption>Exactitud sobre datos no vistos según el tipo de indicador.</figcaption></figure>
-      <figure><img src="img/ml/rod-espectrogramas.png" alt="Espectrogramas de los cinco estados del rodamiento" loading="lazy"><figcaption>Espectrogramas de los cinco estados. Las líneas verticales son los impactos de la falla.</figcaption></figure>
-      <figure><img src="img/ml/rod-pca.png" alt="Proyecciones PCA, Kernel PCA y LDA de los cinco estados" loading="lazy"><figcaption>Kernel PCA separa, sin conocer las etiquetas, estados que PCA mezcla.</figcaption></figure>
+      <p>Con 8 bandas de energía, el clasificador acierta <strong>34 de 35</strong> ventanas que no vio (97 %); con los indicadores temporales, <strong>29 de 35</strong> (83 %). La velocidad sola acierta apenas 8 de 35, así que no explica el resultado.</p>
+      <p>El único error de las bandas es revelador: es la última ventana de la falla combinada, cuando el eje gira a <strong>12,6 Hz</strong>, más lento que cualquier velocidad que el modelo vio al entrenar (mínimo 14,4 Hz).</p>
+      <figure><img src="img/ml/rod-exactitud.png" alt="Gráfico de exactitud por conjunto de indicadores, desde 23 % con la velocidad sola hasta 100 % con indicadores temporales y bandas juntos" loading="lazy"><figcaption>Exactitud sobre datos no vistos según el conjunto de indicadores. En gris, el control y la trampa.</figcaption></figure>
+      <figure><img src="img/ml/rod-velocidad.png" alt="Velocidad del eje durante cada grabación, con la zona de prueba marcada" loading="lazy"><figcaption>Cada grabación acelera y frena a su propio ritmo. La combinada termina más lenta que todo lo visto en el entrenamiento.</figcaption></figure>
+      <figure><img src="img/ml/rod-espectrogramas.png" alt="Espectrogramas de los cinco estados del rodamiento" loading="lazy"><figcaption>En pista interna y combinada, las líneas verticales son ráfagas de impactos que se repiten con cada vuelta del eje.</figcaption></figure>
+      <figure><img src="img/ml/rod-pca.png" alt="Proyecciones PCA, Kernel PCA y LDA de los cinco estados" loading="lazy"><figcaption>Ninguna proyección a 2D separa los cinco estados: Kernel PCA separa normal, bolas y pista externa sin conocer las etiquetas, pero junta pista interna con combinada.</figcaption></figure>
       <h2>Un indicador engañoso</h2>
-      <p>La <strong>media</strong> de la señal parecía separar perfecto los estados, pero solo porque cada grabación tiene un offset eléctrico distinto: identificaba el archivo, no la falla. Lo detecté y lo dejé fuera del análisis.</p>
+      <p>La <strong>media</strong> de la señal parecía separar perfecto los estados, pero solo porque cada grabación tiene un offset eléctrico distinto: identificaba el archivo, no la falla. La dejé fuera del análisis y además la resté de cada ventana antes de calcular los demás indicadores.</p>
       <h2>Qué significa para mantenimiento</h2>
-      <p>La energía por bandas de frecuencia es barata de calcular y se puede seguir en línea con un acelerómetro. Un indicador así permite detectar una falla en el rodamiento y saber <strong>dónde está</strong> (pista interna, externa o bolas) antes de que el equipo se detenga. Con esa información, el cambio se puede programar en una detención planificada en vez de hacerlo como una correctiva.</p>
+      <p>La energía por bandas de frecuencia es barata de calcular y se puede seguir en línea con un acelerómetro. Un indicador así permite detectar una falla en el rodamiento y saber <strong>dónde está</strong> (pista interna, externa o bolas) antes de que el equipo se detenga, para programar el cambio en una detención planificada en vez de hacerlo como una correctiva. El error a baja velocidad deja una lección práctica: el modelo debe entrenarse con todo el rango de velocidades en que opera la máquina.</p>
       <h2>Mejoras respecto al trabajo original (2022)</h2>
       <ul>
         <li>Submuestreo con filtro anti-aliasing en vez de tomar uno de cada 20 puntos.</li>
-        <li>Conclusiones medidas con Fisher score y exactitud sobre datos no vistos, en vez de "a ojo".</li>
-        <li>LDA dentro de un <code>Pipeline</code>, sin fuga de información, y funciones reutilizables en vez de código repetido.</li>
+        <li>Prueba separada antes de explorar, sin ventanas compartidas con el entrenamiento.</li>
+        <li>Offset restado de cada ventana, pico como valor absoluto y FFT con ventana Hann.</li>
+        <li>Velocidad del eje medida con el encoder y usada como control.</li>
+        <li>Resultados medidos con datos no vistos e informados con su margen de error, en vez de conclusiones "a ojo".</li>
       </ul>
-      <p class="note">Limitación: cada estado viene de una sola grabación, así que el 100 % es optimista. El modelo puede estar reconociendo la grabación además de la falla; el siguiente paso es validar con otras grabaciones del mismo dataset.</p>
+      <p class="note">Limitación: cada estado viene de una sola grabación, así que los resultados son optimistas. El modelo puede estar reconociendo la grabación además de la falla; el siguiente paso es validar con otras grabaciones del mismo dataset. Además, solo se analiza hasta 5 kHz, sin análisis de envolvente.</p>
     </div>
     <aside class="side">
       <div><div class="k">Tipo</div><div class="v">Diagnóstico de fallas por vibración</div></div>
       <div><div class="k">Herramientas</div><div class="v">Python, SciPy, scikit-learn, pandas</div></div>
-      <div><div class="k">Métodos</div><div class="v">FFT, espectrograma, Fisher score, PCA, Kernel PCA, LDA</div></div>
+      <div><div class="k">Métodos</div><div class="v">FFT con ventana Hann, espectrograma, Fisher score, PCA, Kernel PCA, LDA, control por velocidad</div></div>
       <div><div class="k">Datos</div><div class="v">Públicos: Universidad de Ottawa (Huang y Baddour, 2018)</div></div>
       <div><div class="k">Origen</div><div class="v">Diplomado Big Data Analytics, U. de Chile · Módulo 2</div></div>
     </aside>
