@@ -3,6 +3,7 @@
 ## Cómo trabajar
 - Todo en **español** (textos del sitio, mensajes de commit y respuestas).
 - **Preguntar antes de cada paso**: proponer el cambio y esperar aprobación antes de editar o publicar.
+- **Tesis y trabajos con empresas:** no publicar el nombre de la empresa, la localidad de la planta ni el nombre comercial de los equipos. Revisar también nombres de archivo y metadatos.
 - No inventar datos personales, cargos ni logros: la fuente es `docs/CV_Diego_Ojeda.pdf` o lo que Diego indique.
 - En los proyectos de ejemplo, dejar claro cuando los datos son referenciales.
 
@@ -16,12 +17,12 @@ Una sola página con HTML, CSS y JavaScript en el mismo archivo, sin herramienta
 
 - **Vistas por hash:** el inicio (`#inicio`, `#proyectos`, `#sobre-mi`, `#habilidades`, `#contacto`) y vistas que reemplazan el inicio:
   - Áreas (carpetas): `#planificacion`, `#datos`, `#apps`, `#diseno-3d`, `#machine-learning`
-  - Casos de estudio: `#parada`, `#correa`, `#al-articulo`, `#rodamientos`, `#grietas-rotor`
-  - Proyecto de título: carpeta propia en el inicio que abre directo el caso `#tesis` (túnel HARDENER); sus modelos también están en el visor de `#diseno-3d`. Imágenes en `img/tesis/`.
+  - Casos de estudio: `#parada`, `#correa`, `#al-articulo`, `#rodamientos`, `#grietas-rotor`, `#escenario` (escenario móvil, informe para un cliente en 2019; cliente anónimo, imagen en `img/escenario/`)
+  - Proyecto de título: carpeta propia en el inicio que abre directo el caso `#tesis` (túnel de congelación). Imágenes en `img/tesis/`.
   - Para agregar una vista nueva: crear el `<section>`/`<article>` con `hidden` y sumarlo al objeto `cases` del script de rutas.
 - **Carpetas por área** (`.folder` en `#proyectos`): cada una tiene clase de color (`plan`, `data`, `apps`, `cad`, `ml`, `tes`) y una ilustración SVG en línea que usa los tokens de color, así que cambia sola con la paleta.
 - **Tarjetas de proyecto** (`.card`): categoría, estado (`.status.ok` terminado, `.status.wip` en desarrollo), herramientas y métricas.
-- **Visor 3D** en `#diseno-3d`: three.js r128 desde cdnjs, OrbitControls y GLTFLoader desde jsDelivr. Botones "Actual / Propuesta" alternan dos modelos de la tesis: `modelos/tunel-hardener-actual.glb` (situación actual, Figura 20, convertido desde `Hardener.IGS` con OpenCascade + trimesh) y `modelos/tunel-hardener-propuesta.glb` (propuesta, Figura 26, reconstruida desde `PropuestaV2.SLDASM` sin SolidWorks: los bloques internos van comprimidos con deflate crudo; `Contents/DisplayLists` trae la malla por pieza en coordenadas locales como tiras de triángulos, y el XML `swXmlContents` trae el árbol con `swTransform` para colocar cada instancia; se respetan los componentes ocultos salvo las paredes, que van como carcasa). Las mallas se llaman `carcasa`, `cinta`, `ventiladores` y `estructura`; el visor les asigna material por nombre y el botón "Carcasa" oculta la carcasa. Repo de la tesis (privado): `diegomagdiel/tesis-tunel-hardener`.
+- **Visor 3D reutilizable**: three.js r128 desde cdnjs, OrbitControls y GLTFLoader desde jsDelivr. Cada `<div class="viewer" data-visor data-modelos="propuesta,actual" data-modo="botones|siguiente">` crea su propio visor y arranca solo cuando su sección se ve; los modelos se registran en el objeto `MODELOS` del script (archivo, etiqueta, nombre del botón de capa). Cada caso lleva su visor (`#tesis`: Actual/Propuesta; `#escenario`: escenario móvil) y `#diseno-3d` tiene una galería con "Siguiente modelo →" que recorre todos. La cámara se encuadra sola según el tamaño del modelo y el botón de capa (Carcasa/Puerta) se oculta si el modelo no tiene malla `carcasa`. `modelos/escenario-movil.glb` se armó igual que la propuesta de la tesis, desde `Base completa.SLDASM` (grupos: techo = `ventiladores`, bases = `cinta`, puerta = `carcasa`). Modelos de la tesis: `modelos/tunel-congelacion-actual.glb` (situación actual, Figura 20, convertido desde la exportación IGES del modelo con OpenCascade + trimesh) y `modelos/tunel-congelacion-propuesta.glb` (propuesta, Figura 26, reconstruida desde el ensamblaje de SolidWorks de la propuesta sin tener SolidWorks: los bloques internos van comprimidos con deflate crudo; `Contents/DisplayLists` trae la malla por pieza en coordenadas locales como tiras de triángulos, y el XML `swXmlContents` trae el árbol con `swTransform` para colocar cada instancia; se respetan los componentes ocultos salvo las paredes, que van como carcasa). Las mallas se llaman `carcasa`, `cinta`, `ventiladores` y `estructura`; el visor les asigna material por nombre y el botón "Carcasa" oculta la carcasa. Los archivos fuente de la tesis están en un repositorio privado.
 
 ## Diseño
 - Estética moderna y oscura, temática tecnológica.
@@ -32,6 +33,6 @@ Una sola página con HTML, CSS y JavaScript en el mismo archivo, sin herramienta
 
 ## Pendientes conocidos
 - Carpeta de **Machine learning** (`#machine-learning`): publicados ① rodamientos y ② grietas en rotor, con gráficos en `img/ml/` y textos tomados de los README de cada repo (`DIEGO\extraccion-features-rodamientos`, `DIEGO\clasificacion-grietas-rotor`). Los repos del diplomado son privados, así que el sitio no los enlaza. Faltan ③–⑧, con el proyecto final de culatas como estrella; ver `DIEGO\diplomado-bigdata-confiabilidad\README.md`.
-- **Diseño 3D**: el visor ya muestra el túnel de la tesis. Falta una página de caso de estudio de la tesis y, opcionalmente, el modelo del túnel actual para comparar.
+- **Diseño 3D**: publicados el túnel de la tesis (actual y propuesta) y el escenario móvil. Planificado: polín de carga de la correa CV-05.
 - **Datos y Power BI**: primer dashboard publicado.
 - **Riesgo con Monte Carlo** (proyecto 3 de planificación).

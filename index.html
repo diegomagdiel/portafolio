@@ -226,6 +226,7 @@ a.card:hover{border-color:var(--fg-2);transform:translateY(-2px)}
 @media (max-width:520px){.viewer .vbtns{justify-content:flex-start}.viewer button{padding:5px 8px;font-size:12px}.viewer{aspect-ratio:4/5}}
 .viewer button{font:500 12.5px var(--body);color:var(--fg);background:color-mix(in srgb,var(--surface) 85%,transparent);border:1px solid var(--line);border-radius:6px;padding:6px 10px;cursor:pointer}
 .viewer button[aria-pressed="true"]{border-color:var(--cad);color:var(--cad)}
+.viewer .vnext{border-color:var(--cad);color:var(--cad)}
 .viewer .vfallback{position:absolute;inset:0;display:grid;place-items:center;color:var(--muted);font-family:var(--mono);font-size:12.5px;text-align:center;padding:16px}
 .cat.apps{color:var(--apps);background:var(--apps-soft)}
 .ill .y{fill:var(--apps)} .ill .ys{stroke:var(--apps)}
@@ -583,7 +584,7 @@ figcaption{font-size:13px;color:var(--muted);padding:10px 14px;border-top:1px so
           <div class="art"><svg class="ill" viewBox="0 0 640 360" role="img" aria-label="Ilustración: corte de un túnel de congelación con tres ventiladores que soplan aire frío sobre una cinta con producto, y un termómetro que marca menos 18 grados">
 <defs><filter id="glowT1" x="-20%" y="-30%" width="140%" height="160%"><feGaussianBlur stdDeviation="4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>
 <rect class="bgp" width="640" height="360"/><g class="gl"><line x1="40" y1="0" x2="40" y2="360"/><line x1="80" y1="0" x2="80" y2="360"/><line x1="120" y1="0" x2="120" y2="360"/><line x1="160" y1="0" x2="160" y2="360"/><line x1="200" y1="0" x2="200" y2="360"/><line x1="240" y1="0" x2="240" y2="360"/><line x1="280" y1="0" x2="280" y2="360"/><line x1="320" y1="0" x2="320" y2="360"/><line x1="360" y1="0" x2="360" y2="360"/><line x1="400" y1="0" x2="400" y2="360"/><line x1="440" y1="0" x2="440" y2="360"/><line x1="480" y1="0" x2="480" y2="360"/><line x1="520" y1="0" x2="520" y2="360"/><line x1="560" y1="0" x2="560" y2="360"/><line x1="600" y1="0" x2="600" y2="360"/><line x1="0" y1="40" x2="640" y2="40"/><line x1="0" y1="80" x2="640" y2="80"/><line x1="0" y1="120" x2="640" y2="120"/><line x1="0" y1="160" x2="640" y2="160"/><line x1="0" y1="200" x2="640" y2="200"/><line x1="0" y1="240" x2="640" y2="240"/><line x1="0" y1="280" x2="640" y2="280"/><line x1="0" y1="320" x2="640" y2="320"/></g>
-<text x="104" y="52" class="t">TÚNEL HARDENER · CORTE</text>
+<text x="104" y="52" class="t">TÚNEL DE CONGELACIÓN · CORTE</text>
 <rect x="100" y="64" width="400" height="236" rx="8" class="sf sl" stroke-width="2" fill-opacity=".9"/>
 <line x1="100" y1="150" x2="500" y2="150" class="sl" stroke-width="2"/>
 <g filter="url(#glowT1)"><g class="o" opacity=".9"><rect x="148" y="86" width="72" height="56" rx="4"/><rect x="264" y="86" width="72" height="56" rx="4"/><rect x="380" y="86" width="72" height="56" rx="4"/></g></g>
@@ -829,18 +830,12 @@ figcaption{font-size:13px;color:var(--muted);padding:10px 14px;border-top:1px so
   <div style="padding-top:32px"><a class="back" href="#proyectos">← Volver a las áreas</a></div>
   <div class="area-head">
     <div><span class="cat cad">Carpeta</span><h1>Diseño 3D en SolidWorks</h1><p>Modelos que se pueden girar, acercar y ver por dentro. Arrastra para rotar, usa la rueda o dos dedos para acercar.</p></div>
-    <div class="viewer" id="viewer">
-      <canvas id="cad-canvas" aria-label="Visor 3D interactivo del túnel de congelación HARDENER, con botones para alternar entre la situación actual y la propuesta, y para ocultar la carcasa"></canvas>
-      <div class="vfallback" id="vfallback" hidden>El visor 3D no pudo cargarse en este navegador.</div>
-      <div class="vbar">
-        <span class="vtag">Túnel HARDENER · propuesta (cinta de 1,6 m)</span>
-        <div class="vbtns"><button type="button" data-modelo="actual" aria-pressed="false">Actual</button><button type="button" data-modelo="propuesta" aria-pressed="true">Propuesta</button><button type="button" id="btn-shell" aria-pressed="true">Carcasa</button><button type="button" id="btn-wire" aria-pressed="false">Alámbrica</button><button type="button" id="btn-spin" aria-pressed="true">Girar</button></div>
-      </div>
-    </div>
+    <div class="viewer" data-visor data-modelos="propuesta,actual,escenario" data-modo="siguiente" aria-label="Galería 3D de modelos en SolidWorks"></div>
   </div>
-  <p style="color:var(--muted);font-size:14px;margin:-18px 0 28px">Modelos en SolidWorks de mi proyecto de título. Compara el túnel <b>actual</b>, con su cinta de 0,9 m, con la <b>propuesta</b>: una cinta de 1,6 m para que entren las cuatro líneas de producto, con ductos bajo cada ventilador. Apaga la carcasa para ver el interior.</p>
+  <p style="color:var(--muted);font-size:14px;margin:-18px 0 28px">Galería de mis modelos en SolidWorks. Usa <b>Siguiente modelo</b> para recorrerlos; cada proyecto tiene además su propio visor dentro de su carpeta.</p>
   <div class="grid" style="padding-bottom:64px">
     <a class="card" href="#tesis"><div class="thumb"><img src="img/tesis/tunel-propuesta.png" alt="Modelo 3D en SolidWorks del túnel de congelación modificado, con tres ventiladores y la cinta ensanchada"></div><div class="body"><div class="tagrow"><span class="cat cad">Proyecto de título</span><span class="status ok">Terminado</span></div><h3>Rediseño del túnel de congelación de una planta de mejillones</h3><p>Dos de las cuatro cintas pasaban por fuera del túnel y el producto no llegaba a −18 °C. Propuse ensanchar la cinta de 0,9 a 1,6 m y verifiqué la idea con cálculo térmico, simulación del aire en ANSYS y análisis estructural, por cerca del 21 % del costo de un túnel nuevo.</p><div class="tools"><span>SolidWorks</span><span>ANSYS</span><span>PTC Creo</span></div><div class="metrics"><div><b>2 500 kg/h</b><span>flujo recomendado</span></div><div><b>0,9 → 1,6 m</b><span>ancho de cinta</span></div><div><b>$40 M</b><span>vs $188 M</span></div></div></div></a>
+    <a class="card" href="#escenario"><div class="thumb"><img src="img/escenario/escenario-modelo.png" alt="Modelo 3D en SolidWorks del escenario móvil desplegado: base, pilares y vigas curvas del techo"></div><div class="body"><div class="tagrow"><span class="cat cad">Cálculo estructural</span><span class="status ok">Terminado · 2019</span></div><h3>Escenario móvil que se despliega desde un camión</h3><p>Un escenario para conciertos que viaja plegado en la parte trasera de un camión y se abre como un transformer. Lo medí, lo modelé en SolidWorks y revisé sus esfuerzos y el viento que lo podría volcar.</p><div class="tools"><span>SolidWorks</span><span>PTC Creo</span><span>ASCE 7</span></div><div class="metrics"><div><b>7</b><span>elementos analizados</span></div><div><b>79 km/h</b><span>viento de volcamiento</span></div><div><b>2</b><span>con F.S. bajo 1</span></div></div></div></a>
     <div class="card"><div class="thumb empty">Próximo modelo</div><div class="body"><div class="tagrow"><span class="cat cad">Diseño 3D</span><span class="status">Planificado</span></div><h3>Polín de carga para la correa CV-05</h3><p>Modelar en SolidWorks el polín de la correa del proyecto de valor ganado, para unir el diseño de la pieza con la planificación de su montaje.</p><div class="tools"><span>SolidWorks</span><span>Planos</span></div></div></div>
   </div>
 </section>
@@ -1039,7 +1034,7 @@ figcaption{font-size:13px;color:var(--muted);padding:10px 14px;border-top:1px so
   <a class="back" href="#proyectos">← Volver a las áreas</a>
   <div class="tagrow" style="justify-content:flex-start;gap:12px"><span class="cat tes">Proyecto de título</span><span class="status ok">Terminado · UACh 2018</span></div>
   <h1>Rediseño del túnel de congelación de una planta de mejillones</h1>
-  <p class="lead">En una planta de choritos en Chiloé, dos de las cuatro cintas pasaban por fuera del túnel de congelación HARDENER, y el producto salía a temperaturas de hasta −2 °C cuando la norma exige −18 °C. Estudié si se podía modificar el túnel existente en vez de comprar uno nuevo.</p>
+  <p class="lead">En una planta procesadora de mariscos, dos de las cuatro cintas de producto pasaban por fuera del túnel de congelación, y el producto salía a temperaturas de hasta −2 °C cuando la norma exige −18 °C. Estudié si se podía modificar el túnel existente en vez de comprar uno nuevo.</p>
   <div class="kpis">
     <div><b>0,9 → 1,6 m</b><span>ancho de la cinta del túnel</span></div>
     <div><b>2 500 kg/h</b><span>flujo recomendado de producto</span></div>
@@ -1049,12 +1044,12 @@ figcaption{font-size:13px;color:var(--muted);padding:10px 14px;border-top:1px so
   <div class="case-grid">
     <div class="prose">
       <h2>El problema</h2>
-      <p>La carne de chorito se cuece, se enfría y se congela con el método <strong>IQF</strong> (<em>Individual Quick Freezing</em>), que congela cada pieza por separado. Después de un primer túnel, una calibradora separa el producto por tamaño en cuatro cintas, se le aplica una capa de hielo protectora (glaseado) y pasa al segundo túnel, el HARDENER. Pero solo dos de las cuatro cintas entraban al túnel. En las otras dos el producto:</p>
+      <p>La carne de chorito se cuece, se enfría y se congela con el método <strong>IQF</strong> (<em>Individual Quick Freezing</em>), que congela cada pieza por separado. Después de un primer túnel, una calibradora separa el producto por tamaño en cuatro cintas, se le aplica una capa de hielo protectora (glaseado) y pasa a un segundo túnel de congelación. Pero solo dos de las cuatro cintas entraban al túnel. En las otras dos el producto:</p>
       <ul>
         <li>se aglomeraba y se rompía,</li>
         <li>perdía el glaseado y sufría quemaduras por frío,</li>
         <li>generaba escarcha en las cajas,</li>
-        <li>y no cumplía los −18 °C que exige SERNAPESCA, lo que se considera una falta grave.</li>
+        <li>y no cumplía los −18 °C que exige la normativa sanitaria, lo que se considera una falta grave.</li>
       </ul>
 
       <h2>La propuesta</h2>
@@ -1068,7 +1063,9 @@ figcaption{font-size:13px;color:var(--muted);padding:10px 14px;border-top:1px so
         <figure><img src="img/tesis/tunel-actual.png" alt="Modelo 3D del túnel actual, con la cinta de 0,9 m y tres ventiladores" loading="lazy"><figcaption>Túnel actual: cinta de 0,9 m.</figcaption></figure>
         <figure><img src="img/tesis/tunel-propuesta.png" alt="Modelo 3D del túnel modificado, con la cinta ensanchada a 1,6 m" loading="lazy"><figcaption>Propuesta: cinta de 1,6 m con cuatro carriles.</figcaption></figure>
       </div>
-      <p><a class="btn" href="#diseno-3d">Ver los dos modelos en 3D →</a></p>
+      <h2>Los modelos en 3D</h2>
+      <p>Compara el túnel <strong>actual</strong> con la <strong>propuesta</strong>. Apaga la carcasa para ver el interior: los ventiladores, los ductos y la cinta.</p>
+      <div class="viewer" data-visor data-modelos="propuesta,actual" data-modo="botones" aria-label="Visor 3D del túnel de congelación: situación actual y propuesta"></div>
 
       <h2>Cómo lo verifiqué</h2>
       <p><strong>1. Capacidad de frío del túnel.</strong> Sumé todas las cargas de calor que el evaporador (46 kW) debe compensar: motores, paredes, infiltración de aire, fricción y luces. Al pasar más producto se agrandan las aberturas y entra más aire caliente, así que la capacidad disponible bajaba. Con cortinas de PVC vuelve a subir:</p>
@@ -1110,12 +1107,68 @@ figcaption{font-size:13px;color:var(--muted);padding:10px 14px;border-top:1px so
       <div><div class="k">Herramientas</div><div class="v">SolidWorks, ANSYS CFX, Food Freezing, PTC Creo, AutoCAD</div></div>
       <div><div class="k">Métodos</div><div class="v">Balance de cargas de refrigeración, simulación de fluidos (CFD), transferencia de calor, análisis estructural por elementos finitos</div></div>
       <div><div class="k">Datos</div><div class="v">Mediciones en planta con anemómetro y termocuplas</div></div>
-      <a class="btn primary" href="#diseno-3d">Ver modelos en 3D</a>
+      <a class="btn primary" href="#diseno-3d">Galería de modelos 3D</a>
     </aside>
   </div>
 </article>
 
 <!-- Caso app -->
+<!-- Caso: escenario móvil (cliente anónimo) -->
+<article class="case wrap" id="escenario" hidden>
+  <a class="back" href="#diseno-3d">← Volver a Diseño 3D</a>
+  <div class="tagrow" style="justify-content:flex-start;gap:12px"><span class="cat cad">Cálculo estructural</span><span class="status ok">Terminado · 2019</span></div>
+  <h1>Escenario móvil que se despliega desde un camión</h1>
+  <p class="lead">Una empresa tenía un escenario para conciertos que viaja plegado en la parte trasera de un camión y se abre como un transformer. Se había construido sin cálculo estructural, así que nadie sabía cuánto peso resistía ni con qué viento podía volcar.</p>
+  <div class="kpis">
+    <div><b>7</b><span>elementos analizados con elementos finitos</span></div>
+    <div><b>2</b><span>con factor de seguridad bajo 1</span></div>
+    <div><b>79 km/h</b><span>viento mínimo para volcarlo</span></div>
+    <div><b>≈ 10,6 t</b><span>peso estimado de la estructura</span></div>
+  </div>
+  <div class="case-grid">
+    <div class="prose">
+      <h2>El problema</h2>
+      <p>El escenario sostiene parlantes, luces y pantallas, además de músicos y equipos. Como no tenía un análisis previo, una falla podía causar accidentes graves. El encargo fue revisar la estructura, calcular el viento que la volcaría y recomendar mejoras.</p>
+
+      <h2>El modelo en 3D</h2>
+      <p>Tomé las medidas de cada pieza con huincha y pie de metro y armé el ensamblaje en SolidWorks: la base central que va sobre el camión, las bases que se despliegan con bisagras, los pilares con vigas IPE y la estructura superior de vigas curvas. Usa <strong>Puerta</strong> para ocultar el cierre trasero.</p>
+      <div class="viewer" data-visor data-modelos="escenario" data-modo="botones" aria-label="Visor 3D del escenario móvil desplegado"></div>
+
+      <h2>Cómo lo verifiqué</h2>
+      <p><strong>1. Esfuerzos (PTC Creo).</strong> Separé la estructura en partes y cargué cada una con lo que soporta: 500 kg por parlante, 400 kg de luces y 300 a 500 kg por pantalla. Comparé el esfuerzo máximo real (descartando los puntos singulares de la malla) con la fluencia del acero: 235 MPa para el ASTM A36 y 355 MPa para las vigas de ASTM A572 G50.</p>
+      <div class="tabla"><table>
+        <tr><th>Elemento</th><th>Esfuerzo máx.</th><th>Factor de seguridad</th></tr>
+        <tr><td>Perfil que sostiene parlante y pantalla</td><td>263 MPa</td><td><b>0,89</b></td></tr>
+        <tr><td>Viga curva superior</td><td>85 MPa</td><td>4,17</td></tr>
+        <tr><td>Pilares</td><td>20 MPa</td><td>11,75</td></tr>
+        <tr><td>Viga IPE de los pilares</td><td>148 MPa</td><td>2,39</td></tr>
+        <tr><td>Base</td><td>75 MPa</td><td>3,13</td></tr>
+        <tr><td>Apoyos de la base</td><td>158 MPa</td><td>1,48</td></tr>
+        <tr><td>Bisagras de la base</td><td>274 MPa</td><td><b>0,85</b></td></tr>
+      </table></div>
+      <p>Dos elementos superaban la fluencia: empezaban a deformarse, aunque seguían bajo la rotura (unos 360 MPa).</p>
+
+      <p><strong>2. Viento de volcamiento.</strong> El escenario lleva una tela negra atrás y a los costados que el viento empuja como una vela. Igualé el momento del viento con el del peso respecto del punto de apoyo, con la presión de viento de la norma ASCE 7 (exposición C, 12 m de altura). Con unas 10,6 t, el brazo del peso de 1,5 m y la fuerza del viento aplicada a 8,5 m sobre una tela de 7 × 12 m, el escenario vuelca sobre <strong>79 km/h</strong>.</p>
+
+      <h2>Recomendaciones</h2>
+      <ul>
+        <li>No colgar parlante y pantalla del mismo perfil: rediseñar el soporte o moverlos.</li>
+        <li>Reforzar las bisagras con una placa soldada o agregar más, y sumar tres apoyos a la base.</li>
+        <li>Dejar las ruedas del camión en el piso al montar, para repartir mejor la carga.</li>
+        <li>Usar el escenario con viento bajo 30 km/h (factor de seguridad sobre 2) y poner velcros cada 1,5 m en la tela para liberarla en una emergencia.</li>
+        <li>Hacer una mantención anual de soldaduras, óxido y pernos.</li>
+      </ul>
+      <p class="note" style="color:var(--muted);font-size:14px;border-left:2px solid var(--cad);padding-left:12px">Limitaciones: no se analizaron soldaduras, cables ni poleas, y el peso de la base central y sus puertas se estimó en 5 000 kg. El modelo viene de medidas en terreno, así que puede tener pequeñas diferencias con el escenario real.</p>
+    </div>
+    <aside class="side">
+      <div><div class="k">Tipo</div><div class="v">Informe técnico para un cliente (2019)</div></div>
+      <div><div class="k">Herramientas</div><div class="v">SolidWorks, PTC Creo</div></div>
+      <div><div class="k">Métodos</div><div class="v">Levantamiento de medidas, análisis por elementos finitos, cargas de viento según ASCE 7, equilibrio de momentos</div></div>
+      <a class="btn primary" href="#diseno-3d">Galería de modelos 3D</a>
+    </aside>
+  </div>
+</article>
+
 <article class="case wrap" id="al-articulo" hidden>
   <a class="back" href="#apps">← Volver a Aplicaciones y herramientas</a>
   <div class="tagrow" style="justify-content:flex-start;gap:12px"><span class="cat apps">Aplicación web</span><span class="status ok">Publicada</span></div>
@@ -1247,7 +1300,7 @@ figcaption{font-size:13px;color:var(--muted);padding:10px 14px;border-top:1px so
 <script>
 (function(){
   var home=document.getElementById('home');
-  var cases={tesis:document.getElementById('tesis'),parada:document.getElementById('parada'),correa:document.getElementById('correa'),planificacion:document.getElementById('planificacion'),datos:document.getElementById('datos'),apps:document.getElementById('apps'),'diseno-3d':document.getElementById('diseno-3d'),'al-articulo':document.getElementById('al-articulo'),'machine-learning':document.getElementById('machine-learning'),rodamientos:document.getElementById('rodamientos'),'grietas-rotor':document.getElementById('grietas-rotor')};
+  var cases={tesis:document.getElementById('tesis'),escenario:document.getElementById('escenario'),parada:document.getElementById('parada'),correa:document.getElementById('correa'),planificacion:document.getElementById('planificacion'),datos:document.getElementById('datos'),apps:document.getElementById('apps'),'diseno-3d':document.getElementById('diseno-3d'),'al-articulo':document.getElementById('al-articulo'),'machine-learning':document.getElementById('machine-learning'),rodamientos:document.getElementById('rodamientos'),'grietas-rotor':document.getElementById('grietas-rotor')};
   function route(){
     var h=(location.hash||'').slice(1);
     var c=cases[h];
@@ -1268,69 +1321,94 @@ figcaption{font-size:13px;color:var(--muted);padding:10px 14px;border-top:1px so
 <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
 <script>
+/* Visor 3D reutilizable: cada <div class="viewer" data-visor data-modelos="a,b" data-modo="botones|siguiente"> crea el suyo
+   y arranca solo cuando su sección está visible. */
 (function(){
-  var started=false, area=document.getElementById('diseno-3d');
+  var MODELOS={
+    actual:{archivo:'modelos/tunel-congelacion-actual.glb',boton:'Actual',etiqueta:'Túnel de congelación · situación actual (cinta de 0,9 m)',capa:'Carcasa'},
+    propuesta:{archivo:'modelos/tunel-congelacion-propuesta.glb',boton:'Propuesta',etiqueta:'Túnel de congelación · propuesta (cinta de 1,6 m)',capa:'Carcasa'},
+    escenario:{archivo:'modelos/escenario-movil.glb',boton:'Escenario',etiqueta:'Escenario móvil desplegado · 21 × 8 m',capa:'Puerta'}
+  };
   function css(v){return getComputedStyle(document.documentElement).getPropertyValue(v).trim()||'#888';}
-  function start(){
-    if(started) return; started=true;
-    var canvas=document.getElementById('cad-canvas'), box=document.getElementById('viewer');
-    if(!window.THREE){document.getElementById('vfallback').hidden=false;return;}
-    var renderer;
-    try{renderer=new THREE.WebGLRenderer({canvas:canvas,antialias:true,alpha:true});}catch(e){document.getElementById('vfallback').hidden=false;return;}
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,2));
-    var scene=new THREE.Scene();
-    var camera=new THREE.PerspectiveCamera(35,1,0.1,200); camera.position.set(7.5,5.5,8);
-    var controls=THREE.OrbitControls?new THREE.OrbitControls(camera,canvas):null;
-    if(controls){controls.enableDamping=true;controls.target.set(0,1.2,0);controls.autoRotate=!window.matchMedia('(prefers-reduced-motion: reduce)').matches;controls.autoRotateSpeed=1.2;controls.minDistance=3;controls.maxDistance=20;controls.maxPolarAngle=Math.PI/2-0.04;}
-    scene.add(new THREE.AmbientLight(0xffffff,0.35));
-    scene.add(new THREE.HemisphereLight(0xcfe6ff,0x1a2233,0.9));
-    var key=new THREE.DirectionalLight(0xffffff,0.9); key.position.set(4,6,3); scene.add(key);
-    var rim=new THREE.DirectionalLight(new THREE.Color(css('--cad')),0.6); rim.position.set(-4,2,-3); scene.add(rim);
-    // Materiales por parte del modelo (los colores siguen la paleta activa)
-    var dbl=THREE.DoubleSide;
-    var M={
-      carcasa:new THREE.MeshStandardMaterial({color:0xcfd8e3,metalness:0.1,roughness:0.6,transparent:true,opacity:0.16,depthWrite:false,side:dbl}),
-      cinta:new THREE.MeshStandardMaterial({color:0xaab4c2,metalness:0.15,roughness:0.55,side:dbl}),
-      ventiladores:new THREE.MeshStandardMaterial({color:new THREE.Color(css('--cad')),metalness:0.1,roughness:0.5,side:dbl}),
-      estructura:new THREE.MeshStandardMaterial({color:0x8a95a5,metalness:0.15,roughness:0.6,side:dbl})
-    };
-    var mats=Object.keys(M).map(function(k){return M[k];});
-    var grid=new THREE.GridHelper(12,24,new THREE.Color(css('--line')),new THREE.Color(css('--line'))); scene.add(grid);
-    // Dos modelos de la tesis: situación actual y propuesta. Se cargan una vez y se alterna cuál se ve.
-    var modelos={
-      actual:{archivo:'modelos/tunel-hardener-actual.glb',etiqueta:'Túnel HARDENER · situación actual (cinta de 0,9 m)'},
-      propuesta:{archivo:'modelos/tunel-hardener-propuesta.glb',etiqueta:'Túnel HARDENER · propuesta (cinta de 1,6 m)'}
-    };
-    var actual=null, tag=document.querySelector('#viewer .vtag'), shellBtn=document.getElementById('btn-shell');
-    function aplicarCarcasa(){var on=shellBtn.getAttribute('aria-pressed')==='true'; Object.keys(modelos).forEach(function(k){if(modelos[k].carcasa) modelos[k].carcasa.forEach(function(o){o.visible=on;});});}
-    function mostrar(k){
-      actual=k; tag.textContent=modelos[k].etiqueta;
-      document.querySelectorAll('[data-modelo]').forEach(function(btn){btn.setAttribute('aria-pressed',btn.getAttribute('data-modelo')===k);});
-      Object.keys(modelos).forEach(function(j){if(modelos[j].escena) modelos[j].escena.visible=(j===k);});
-      if(modelos[k].escena||!THREE.GLTFLoader) return;
-      new THREE.GLTFLoader().load(modelos[k].archivo,function(gltf){
-        modelos[k].carcasa=[];
-        gltf.scene.traverse(function(o){
-          if(!o.isMesh) return;
-          var parte=Object.keys(M).filter(function(p){return (o.name+' '+(o.parent?o.parent.name:'')).indexOf(p)>=0;})[0]||'estructura';
-          o.geometry.computeVertexNormals();
-          o.material=M[parte]; if(parte==='carcasa') modelos[k].carcasa.push(o);
-        });
-        modelos[k].escena=gltf.scene; gltf.scene.visible=(actual===k); scene.add(gltf.scene); aplicarCarcasa();
-      },undefined,function(){document.getElementById('vfallback').hidden=false;});
+  function boton(txt,on){var b=document.createElement('button');b.type='button';b.textContent=txt;if(on!==null)b.setAttribute('aria-pressed',on);return b;}
+  function visible(el){return el.offsetParent!==null;}
+  function crear(box){
+    var lista=box.getAttribute('data-modelos').split(','), modo=box.getAttribute('data-modo')||'botones';
+    var canvas=document.createElement('canvas'); canvas.setAttribute('aria-label',box.getAttribute('aria-label')||'Visor 3D');
+    var fb=document.createElement('div'); fb.className='vfallback'; fb.hidden=true; fb.textContent='El visor 3D no pudo cargarse en este navegador.';
+    var bar=document.createElement('div'); bar.className='vbar';
+    var tag=document.createElement('span'); tag.className='vtag';
+    var btns=document.createElement('div'); btns.className='vbtns';
+    bar.appendChild(tag); bar.appendChild(btns); box.appendChild(canvas); box.appendChild(fb); box.appendChild(bar);
+    var sel={}, sig=null;
+    if(modo==='siguiente'){ sig=boton('Siguiente modelo →',null); sig.className='vnext'; btns.appendChild(sig); }
+    else if(lista.length>1) lista.forEach(function(k){ sel[k]=boton(MODELOS[k].boton,false); btns.appendChild(sel[k]); });
+    var shell=boton('Carcasa',true), wire=boton('Alámbrica',false), spin=boton('Girar',true);
+    btns.appendChild(shell); btns.appendChild(wire); btns.appendChild(spin);
+    var started=false;
+    function start(){
+      if(started) return; started=true;
+      if(!window.THREE||!THREE.GLTFLoader){fb.hidden=false;return;}
+      var renderer;
+      try{renderer=new THREE.WebGLRenderer({canvas:canvas,antialias:true,alpha:true});}catch(e){fb.hidden=false;return;}
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,2));
+      var scene=new THREE.Scene();
+      var camera=new THREE.PerspectiveCamera(35,1,0.1,500);
+      var controls=THREE.OrbitControls?new THREE.OrbitControls(camera,canvas):null;
+      if(controls){controls.enableDamping=true;controls.autoRotate=!window.matchMedia('(prefers-reduced-motion: reduce)').matches;controls.autoRotateSpeed=1.2;controls.maxPolarAngle=Math.PI/2-0.04;}
+      scene.add(new THREE.AmbientLight(0xffffff,0.35));
+      scene.add(new THREE.HemisphereLight(0xcfe6ff,0x1a2233,0.9));
+      var key=new THREE.DirectionalLight(0xffffff,0.9); key.position.set(4,6,3); scene.add(key);
+      var rim=new THREE.DirectionalLight(new THREE.Color(css('--cad')),0.6); rim.position.set(-4,2,-3); scene.add(rim);
+      var dbl=THREE.DoubleSide;
+      var M={
+        carcasa:new THREE.MeshStandardMaterial({color:0xcfd8e3,metalness:0.1,roughness:0.6,transparent:true,opacity:0.16,depthWrite:false,side:dbl}),
+        cinta:new THREE.MeshStandardMaterial({color:0xaab4c2,metalness:0.15,roughness:0.55,side:dbl}),
+        ventiladores:new THREE.MeshStandardMaterial({color:new THREE.Color(css('--cad')),metalness:0.1,roughness:0.5,side:dbl}),
+        estructura:new THREE.MeshStandardMaterial({color:0x8a95a5,metalness:0.15,roughness:0.6,side:dbl})
+      };
+      var mats=Object.keys(M).map(function(k){return M[k];});
+      var grid=null, cargados={}, actual=null;
+      function encuadrar(obj){
+        var bb=new THREE.Box3().setFromObject(obj), c=bb.getCenter(new THREE.Vector3()), r=bb.getSize(new THREE.Vector3()).length()/2;
+        var d=r/Math.sin(THREE.MathUtils.degToRad(camera.fov/2))*(camera.aspect<1?1.15:0.85);
+        camera.position.set(c.x+d*0.6,c.y+d*0.42,c.z+d*0.68); camera.near=d/100; camera.far=d*10; camera.updateProjectionMatrix();
+        if(controls){controls.target.copy(c);controls.minDistance=r*0.5;controls.maxDistance=d*2.5;controls.update();}
+        if(grid) scene.remove(grid);
+        var t=Math.ceil(r*2.6); grid=new THREE.GridHelper(t,24,new THREE.Color(css('--line')),new THREE.Color(css('--line'))); grid.position.set(c.x,bb.min.y,c.z); scene.add(grid);
+      }
+      function aplicarCarcasa(){var on=shell.getAttribute('aria-pressed')==='true'; Object.keys(cargados).forEach(function(k){cargados[k].carcasa.forEach(function(o){o.visible=on;});});}
+      function listo(k){shell.hidden=!cargados[k].carcasa.length; encuadrar(cargados[k].escena);}
+      function mostrar(k){
+        actual=k; tag.textContent=MODELOS[k].etiqueta; shell.textContent=MODELOS[k].capa;
+        Object.keys(sel).forEach(function(j){sel[j].setAttribute('aria-pressed',j===k);});
+        Object.keys(cargados).forEach(function(j){cargados[j].escena.visible=(j===k);});
+        if(cargados[k]){listo(k); return;}
+        new THREE.GLTFLoader().load(MODELOS[k].archivo,function(gltf){
+          var car=[];
+          gltf.scene.traverse(function(o){
+            if(!o.isMesh) return;
+            var parte=Object.keys(M).filter(function(p){return (o.name+' '+(o.parent?o.parent.name:'')).indexOf(p)>=0;})[0]||'estructura';
+            o.geometry.computeVertexNormals(); o.material=M[parte]; if(parte==='carcasa') car.push(o);
+          });
+          cargados[k]={escena:gltf.scene,carcasa:car}; scene.add(gltf.scene); aplicarCarcasa();
+          gltf.scene.visible=(actual===k); if(actual===k) listo(k);
+        },undefined,function(){fb.hidden=false;});
+      }
+      Object.keys(sel).forEach(function(k){sel[k].addEventListener('click',function(){mostrar(k);});});
+      if(sig) sig.addEventListener('click',function(){mostrar(lista[(lista.indexOf(actual)+1)%lista.length]);});
+      function size(){var w=box.clientWidth,h=box.clientHeight; if(!w||!h) return; renderer.setSize(w,h,false); camera.aspect=w/h; camera.updateProjectionMatrix();}
+      size(); window.addEventListener('resize',size); window.addEventListener('hashchange',function(){setTimeout(size,40);});
+      mostrar(lista[0]);
+      wire.addEventListener('click',function(){var on=wire.getAttribute('aria-pressed')!=='true'; wire.setAttribute('aria-pressed',on);mats.forEach(function(m){m.wireframe=on;});});
+      shell.addEventListener('click',function(){var on=shell.getAttribute('aria-pressed')!=='true'; shell.setAttribute('aria-pressed',on); aplicarCarcasa();});
+      if(controls){spin.setAttribute('aria-pressed',controls.autoRotate);spin.addEventListener('click',function(){controls.autoRotate=!controls.autoRotate;spin.setAttribute('aria-pressed',controls.autoRotate);});}
+      (function loop(){requestAnimationFrame(loop); if(!visible(box)) return; if(controls) controls.update(); renderer.render(scene,camera);})();
     }
-    if(!THREE.GLTFLoader){ document.getElementById('vfallback').hidden=false; }
-    document.querySelectorAll('[data-modelo]').forEach(function(btn){btn.addEventListener('click',function(){mostrar(btn.getAttribute('data-modelo'));});});
-    mostrar('propuesta');
-    function size(){var w=box.clientWidth,h=box.clientHeight; renderer.setSize(w,h,false); camera.aspect=w/h; camera.updateProjectionMatrix();}
-    size(); window.addEventListener('resize',size);
-    var wire=document.getElementById('btn-wire'), spin=document.getElementById('btn-spin');
-    wire.addEventListener('click',function(){var on=wire.getAttribute('aria-pressed')!=='true'; wire.setAttribute('aria-pressed',on);mats.forEach(function(m){m.wireframe=on;});});
-    shellBtn.addEventListener('click',function(){var on=shellBtn.getAttribute('aria-pressed')!=='true'; shellBtn.setAttribute('aria-pressed',on); aplicarCarcasa();});
-    if(controls){spin.setAttribute('aria-pressed',controls.autoRotate);spin.addEventListener('click',function(){controls.autoRotate=!controls.autoRotate;spin.setAttribute('aria-pressed',controls.autoRotate);});}
-    (function loop(){requestAnimationFrame(loop); if(area.hidden) return; if(controls) controls.update(); renderer.render(scene,camera);})();
+    return function(){ if(visible(box)) start(); };
   }
-  function check(){ if(!area.hidden) start(); }
+  var checks=[].map.call(document.querySelectorAll('[data-visor]'),crear);
+  function check(){checks.forEach(function(f){f();});}
   window.addEventListener('hashchange',function(){setTimeout(check,30);}); check();
 })();
 </script>
