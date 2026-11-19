@@ -17,14 +17,15 @@ Una sola página con HTML, CSS y JavaScript en el mismo archivo, sin herramienta
 - **Vistas por hash:** el inicio (`#inicio`, `#proyectos`, `#sobre-mi`, `#habilidades`, `#contacto`) y vistas que reemplazan el inicio:
   - Áreas (carpetas): `#planificacion`, `#datos`, `#apps`, `#diseno-3d`, `#machine-learning`
   - Casos de estudio: `#parada`, `#correa`, `#al-articulo`, `#rodamientos`, `#grietas-rotor`
+  - Proyecto de título: carpeta propia en el inicio que abre directo el caso `#tesis` (túnel HARDENER); sus modelos también están en el visor de `#diseno-3d`. Imágenes en `img/tesis/`.
   - Para agregar una vista nueva: crear el `<section>`/`<article>` con `hidden` y sumarlo al objeto `cases` del script de rutas.
-- **Carpetas por área** (`.folder` en `#proyectos`): cada una tiene clase de color (`plan`, `data`, `apps`, `cad`, `ml`) y una ilustración SVG en línea que usa los tokens de color, así que cambia sola con la paleta.
+- **Carpetas por área** (`.folder` en `#proyectos`): cada una tiene clase de color (`plan`, `data`, `apps`, `cad`, `ml`, `tes`) y una ilustración SVG en línea que usa los tokens de color, así que cambia sola con la paleta.
 - **Tarjetas de proyecto** (`.card`): categoría, estado (`.status.ok` terminado, `.status.wip` en desarrollo), herramientas y métricas.
 - **Visor 3D** en `#diseno-3d`: three.js r128 desde cdnjs, OrbitControls y GLTFLoader desde jsDelivr. Botones "Actual / Propuesta" alternan dos modelos de la tesis: `modelos/tunel-hardener-actual.glb` (situación actual, Figura 20, convertido desde `Hardener.IGS` con OpenCascade + trimesh) y `modelos/tunel-hardener-propuesta.glb` (propuesta, Figura 26, reconstruida desde `PropuestaV2.SLDASM` sin SolidWorks: los bloques internos van comprimidos con deflate crudo; `Contents/DisplayLists` trae la malla por pieza en coordenadas locales como tiras de triángulos, y el XML `swXmlContents` trae el árbol con `swTransform` para colocar cada instancia; se respetan los componentes ocultos salvo las paredes, que van como carcasa). Las mallas se llaman `carcasa`, `cinta`, `ventiladores` y `estructura`; el visor les asigna material por nombre y el botón "Carcasa" oculta la carcasa. Repo de la tesis (privado): `diegomagdiel/tesis-tunel-hardener`.
 
 ## Diseño
 - Estética moderna y oscura, temática tecnológica.
-- Colores como tokens CSS en `:root`: `--copper` (planificación), `--steel` (datos), `--apps` (aplicaciones), `--cad` (diseño 3D), `--ml` (machine learning, definido por paleta en su propio bloque), más `--bg`, `--surface`, `--line`, `--fg`, `--fg-2`, `--muted`.
+- Colores como tokens CSS en `:root`: `--copper` (planificación), `--steel` (datos), `--apps` (aplicaciones), `--cad` (diseño 3D), `--ml` (machine learning) y `--tes` (proyecto de título), definidos por paleta en su propio bloque, más `--bg`, `--surface`, `--line`, `--fg`, `--fg-2`, `--muted`.
 - **Selector de paletas** (abajo a la derecha): Noche (por defecto), Circuito, Terminal, Plano técnico, Aurora y Topografía. Cada paleta es un bloque `:root[data-skin="..."]` que redefine los tokens, el fondo (`--page-img`) y la fuente de títulos (`--display`). La elección del visitante se guarda en `localStorage`.
 - Tipografías de Google Fonts: Archivo, IBM Plex Sans, IBM Plex Mono, Space Grotesk, JetBrains Mono, Sora y Chakra Petch.
 - El sitio debe verse bien en teléfono (sin desplazamiento horizontal) y respetar `prefers-reduced-motion`.

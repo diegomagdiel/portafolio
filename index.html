@@ -63,6 +63,15 @@
 :root[data-skin="plano"]{--ml:#e6b3ff;--ml-soft:rgba(230,179,255,.14)}
 :root[data-skin="aurora"]{--ml:#c6ff6b;--ml-soft:rgba(198,255,107,.12)}
 :root[data-skin="topografia"]{--ml:#e58cff;--ml-soft:rgba(229,140,255,.13)}
+/* color del área Proyecto de título, por paleta */
+:root{--tes:#ff9f5a;--tes-soft:rgba(255,159,90,.13)}
+@media (prefers-color-scheme: light){:root:not([data-theme="dark"]){--tes:#b5530f;--tes-soft:rgba(181,83,15,.10)}}
+:root[data-theme="light"]{--tes:#b5530f;--tes-soft:rgba(181,83,15,.10)}
+:root[data-skin="circuito"]{--tes:#f4f1a0;--tes-soft:rgba(244,241,160,.12)}
+:root[data-skin="terminal"]{--tes:#f0f0f0;--tes-soft:rgba(240,240,240,.10)}
+:root[data-skin="plano"]{--tes:#ffb3d1;--tes-soft:rgba(255,179,209,.14)}
+:root[data-skin="aurora"]{--tes:#ffd166;--tes-soft:rgba(255,209,102,.13)}
+:root[data-skin="topografia"]{--tes:#f7f7a1;--tes-soft:rgba(247,247,161,.12)}
 body{background-color:var(--bg);background-image:var(--page-img);background-size:var(--page-size);background-attachment:fixed}
 :root[data-skin="aurora"] .card,:root[data-skin="aurora"] .folder,:root[data-skin="aurora"] .gantt{background:color-mix(in srgb,var(--surface) 82%,transparent);backdrop-filter:blur(10px)}
 :root[data-skin="terminal"] h1,:root[data-skin="terminal"] h2{letter-spacing:-.03em}
@@ -221,6 +230,16 @@ a.card:hover{border-color:var(--fg-2);transform:translateY(-2px)}
 .cat.apps{color:var(--apps);background:var(--apps-soft)}
 .ill .y{fill:var(--apps)} .ill .ys{stroke:var(--apps)}
 .folder.ml{--accent-f:var(--ml);--soft-f:var(--ml-soft)}
+.folder.tes{--accent-f:var(--tes);--soft-f:var(--tes-soft)}
+.cat.tes{color:var(--tes);background:var(--tes-soft)}
+.ill .o{fill:var(--tes)} .ill .os{stroke:var(--tes)} .ill .to{fill:var(--tes);font-family:var(--mono);font-size:13px;font-weight:500}
+.tabla{overflow-x:auto;margin:14px 0 6px;max-width:100%}
+.tabla table{border-collapse:collapse;width:100%;font-size:14px;font-variant-numeric:tabular-nums}
+.tabla th,.tabla td{border-bottom:1px solid var(--line);padding:8px 10px;text-align:left;color:var(--fg-2);white-space:nowrap}
+.tabla th{font-family:var(--mono);font-size:11.5px;letter-spacing:.04em;text-transform:uppercase;color:var(--muted);font-weight:500}
+.tabla td b{color:var(--fg)}
+.pareja{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media (max-width:640px){.pareja{grid-template-columns:1fr}}
 .cat.ml{color:var(--ml);background:var(--ml-soft)}
 .ill .p{fill:var(--ml)} .ill .ps{stroke:var(--ml)} .ill .tp{fill:var(--ml);font-family:var(--mono);font-size:12px;font-weight:500}
 .case .note{color:var(--muted);font-size:14px;border-left:2px solid var(--ml);padding-left:12px}
@@ -560,6 +579,34 @@ figcaption{font-size:13px;color:var(--muted);padding:10px 14px;border-top:1px so
             <div class="fmeta"><span class="count">2 terminados · 6 en desarrollo</span><span class="open">Abrir carpeta →</span></div>
           </div>
         </a>
+<a class="folder tes" href="#tesis">
+          <div class="art"><svg class="ill" viewBox="0 0 640 360" role="img" aria-label="Ilustración: corte de un túnel de congelación con tres ventiladores que soplan aire frío sobre una cinta con producto, y un termómetro que marca menos 18 grados">
+<defs><filter id="glowT1" x="-20%" y="-30%" width="140%" height="160%"><feGaussianBlur stdDeviation="4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>
+<rect class="bgp" width="640" height="360"/><g class="gl"><line x1="40" y1="0" x2="40" y2="360"/><line x1="80" y1="0" x2="80" y2="360"/><line x1="120" y1="0" x2="120" y2="360"/><line x1="160" y1="0" x2="160" y2="360"/><line x1="200" y1="0" x2="200" y2="360"/><line x1="240" y1="0" x2="240" y2="360"/><line x1="280" y1="0" x2="280" y2="360"/><line x1="320" y1="0" x2="320" y2="360"/><line x1="360" y1="0" x2="360" y2="360"/><line x1="400" y1="0" x2="400" y2="360"/><line x1="440" y1="0" x2="440" y2="360"/><line x1="480" y1="0" x2="480" y2="360"/><line x1="520" y1="0" x2="520" y2="360"/><line x1="560" y1="0" x2="560" y2="360"/><line x1="600" y1="0" x2="600" y2="360"/><line x1="0" y1="40" x2="640" y2="40"/><line x1="0" y1="80" x2="640" y2="80"/><line x1="0" y1="120" x2="640" y2="120"/><line x1="0" y1="160" x2="640" y2="160"/><line x1="0" y1="200" x2="640" y2="200"/><line x1="0" y1="240" x2="640" y2="240"/><line x1="0" y1="280" x2="640" y2="280"/><line x1="0" y1="320" x2="640" y2="320"/></g>
+<text x="104" y="52" class="t">TÚNEL HARDENER · CORTE</text>
+<rect x="100" y="64" width="400" height="236" rx="8" class="sf sl" stroke-width="2" fill-opacity=".9"/>
+<line x1="100" y1="150" x2="500" y2="150" class="sl" stroke-width="2"/>
+<g filter="url(#glowT1)"><g class="o" opacity=".9"><rect x="148" y="86" width="72" height="56" rx="4"/><rect x="264" y="86" width="72" height="56" rx="4"/><rect x="380" y="86" width="72" height="56" rx="4"/></g></g>
+<g class="bgp"><ellipse cx="184" cy="88" rx="36" ry="7"/><ellipse cx="300" cy="88" rx="36" ry="7"/><ellipse cx="416" cy="88" rx="36" ry="7"/></g>
+<g class="os" fill="none" stroke-width="2" stroke-linecap="round" opacity=".85">
+<path d="M170 162 v34 m-6 -8 l6 8 l6 -8"/><path d="M198 162 v34 m-6 -8 l6 8 l6 -8"/>
+<path d="M286 162 v34 m-6 -8 l6 8 l6 -8"/><path d="M314 162 v34 m-6 -8 l6 8 l6 -8"/>
+<path d="M402 162 v34 m-6 -8 l6 8 l6 -8"/><path d="M430 162 v34 m-6 -8 l6 8 l6 -8"/></g>
+<rect x="40" y="226" width="520" height="14" rx="3" class="m" opacity=".75"/>
+<g class="b"><circle cx="70" cy="221" r="5"/><circle cx="96" cy="221" r="5"/><circle cx="160" cy="221" r="5"/><circle cx="196" cy="221" r="5"/><circle cx="252" cy="221" r="5"/><circle cx="298" cy="221" r="5"/><circle cx="340" cy="221" r="5"/><circle cx="392" cy="221" r="5"/><circle cx="440" cy="221" r="5"/><circle cx="486" cy="221" r="5"/><circle cx="530" cy="221" r="5"/></g>
+<g class="sl" stroke-width="1.5"><line x1="120" y1="240" x2="120" y2="300"/><line x1="300" y1="240" x2="300" y2="300"/><line x1="480" y1="240" x2="480" y2="300"/></g>
+<text x="44" y="262" class="t">CINTA 0,9 → 1,6 m</text>
+<rect x="556" y="78" width="16" height="120" rx="8" class="sf sl" stroke-width="1.5"/>
+<rect x="560" y="120" width="8" height="74" rx="4" class="o"/><circle cx="564" cy="206" r="13" class="o"/>
+<text x="532" y="66" class="to">−18 °C</text>
+</svg></div>
+          <div class="fbody">
+            <span class="cat tes" style="align-self:flex-start">Proyecto de título</span>
+            <h3>Túnel de congelación de una planta de mejillones</h3>
+            <p>Mi tesis de Ingeniería Civil Mecánica: cómo lograr que todo el producto llegue a −18 °C modificando el túnel existente, en vez de comprar uno nuevo.</p>
+            <div class="fmeta"><span class="count">Terminado · UACh 2018</span><span class="open">Abrir carpeta →</span></div>
+          </div>
+        </a>
       </div>
     </div>
   </section>
@@ -793,7 +840,7 @@ figcaption{font-size:13px;color:var(--muted);padding:10px 14px;border-top:1px so
   </div>
   <p style="color:var(--muted);font-size:14px;margin:-18px 0 28px">Modelos en SolidWorks de mi proyecto de título. Compara el túnel <b>actual</b>, con su cinta de 0,9 m, con la <b>propuesta</b>: una cinta de 1,6 m para que entren las cuatro líneas de producto, con ductos bajo cada ventilador. Apaga la carcasa para ver el interior.</p>
   <div class="grid" style="padding-bottom:64px">
-    <div class="card"><div class="thumb"><img src="img/tesis-tunel-propuesta.png" alt="Modelo 3D en SolidWorks del túnel de congelación modificado, con tres ventiladores y la cinta ensanchada"></div><div class="body"><div class="tagrow"><span class="cat cad">Proyecto de título</span><span class="status ok">Terminado</span></div><h3>Rediseño del túnel de congelación de una planta de mejillones</h3><p>Dos de las cuatro cintas pasaban por fuera del túnel y el producto no llegaba a −18 °C. Propuse ensanchar la cinta de 0,9 a 1,6 m y verifiqué la idea con cálculo térmico, simulación del aire en ANSYS y análisis estructural, por cerca del 21 % del costo de un túnel nuevo.</p><div class="tools"><span>SolidWorks</span><span>ANSYS</span><span>PTC Creo</span></div><div class="metrics"><div><b>2 500 kg/h</b><span>flujo recomendado</span></div><div><b>0,9 → 1,6 m</b><span>ancho de cinta</span></div><div><b>$40 M</b><span>vs $188 M</span></div></div></div></div>
+    <a class="card" href="#tesis"><div class="thumb"><img src="img/tesis/tunel-propuesta.png" alt="Modelo 3D en SolidWorks del túnel de congelación modificado, con tres ventiladores y la cinta ensanchada"></div><div class="body"><div class="tagrow"><span class="cat cad">Proyecto de título</span><span class="status ok">Terminado</span></div><h3>Rediseño del túnel de congelación de una planta de mejillones</h3><p>Dos de las cuatro cintas pasaban por fuera del túnel y el producto no llegaba a −18 °C. Propuse ensanchar la cinta de 0,9 a 1,6 m y verifiqué la idea con cálculo térmico, simulación del aire en ANSYS y análisis estructural, por cerca del 21 % del costo de un túnel nuevo.</p><div class="tools"><span>SolidWorks</span><span>ANSYS</span><span>PTC Creo</span></div><div class="metrics"><div><b>2 500 kg/h</b><span>flujo recomendado</span></div><div><b>0,9 → 1,6 m</b><span>ancho de cinta</span></div><div><b>$40 M</b><span>vs $188 M</span></div></div></div></a>
     <div class="card"><div class="thumb empty">Próximo modelo</div><div class="body"><div class="tagrow"><span class="cat cad">Diseño 3D</span><span class="status">Planificado</span></div><h3>Polín de carga para la correa CV-05</h3><p>Modelar en SolidWorks el polín de la correa del proyecto de valor ganado, para unir el diseño de la pieza con la planificación de su montaje.</p><div class="tools"><span>SolidWorks</span><span>Planos</span></div></div></div>
   </div>
 </section>
@@ -987,6 +1034,87 @@ figcaption{font-size:13px;color:var(--muted);padding:10px 14px;border-top:1px so
   </div>
 </article>
 
+<!-- Proyecto de título -->
+<article class="case wrap" id="tesis" hidden>
+  <a class="back" href="#proyectos">← Volver a las áreas</a>
+  <div class="tagrow" style="justify-content:flex-start;gap:12px"><span class="cat tes">Proyecto de título</span><span class="status ok">Terminado · UACh 2018</span></div>
+  <h1>Rediseño del túnel de congelación de una planta de mejillones</h1>
+  <p class="lead">En una planta de choritos en Chiloé, dos de las cuatro cintas pasaban por fuera del túnel de congelación HARDENER, y el producto salía a temperaturas de hasta −2 °C cuando la norma exige −18 °C. Estudié si se podía modificar el túnel existente en vez de comprar uno nuevo.</p>
+  <div class="kpis">
+    <div><b>0,9 → 1,6 m</b><span>ancho de la cinta del túnel</span></div>
+    <div><b>2 500 kg/h</b><span>flujo recomendado de producto</span></div>
+    <div><b>28,2 kW</b><span>capacidad de frío disponible con cortinas de PVC</span></div>
+    <div><b>$40 M</b><span>frente a $188 M de un túnel nuevo</span></div>
+  </div>
+  <div class="case-grid">
+    <div class="prose">
+      <h2>El problema</h2>
+      <p>La carne de chorito se cuece, se enfría y se congela con el método <strong>IQF</strong> (<em>Individual Quick Freezing</em>), que congela cada pieza por separado. Después de un primer túnel, una calibradora separa el producto por tamaño en cuatro cintas, se le aplica una capa de hielo protectora (glaseado) y pasa al segundo túnel, el HARDENER. Pero solo dos de las cuatro cintas entraban al túnel. En las otras dos el producto:</p>
+      <ul>
+        <li>se aglomeraba y se rompía,</li>
+        <li>perdía el glaseado y sufría quemaduras por frío,</li>
+        <li>generaba escarcha en las cajas,</li>
+        <li>y no cumplía los −18 °C que exige SERNAPESCA, lo que se considera una falta grave.</li>
+      </ul>
+
+      <h2>La propuesta</h2>
+      <p>En vez de comprar un túnel nuevo, propuse modificar el existente:</p>
+      <ul>
+        <li><strong>Ensanchar la cinta de 0,9 a 1,6 m</strong>, para que las cuatro líneas de producto pasen por dentro del túnel.</li>
+        <li>Desplazar y <strong>reforzar la estructura interior</strong> que sostiene el techo, los ventiladores y la cinta, cambiando los perfiles circulares por perfiles cuadrados de 20 × 20 × 2 mm.</li>
+        <li>Instalar <strong>cortinas de PVC</strong> en la entrada y la salida, para reducir el aire caliente que se infiltra al agrandar las aberturas.</li>
+      </ul>
+      <div class="pareja">
+        <figure><img src="img/tesis/tunel-actual.png" alt="Modelo 3D del túnel actual, con la cinta de 0,9 m y tres ventiladores" loading="lazy"><figcaption>Túnel actual: cinta de 0,9 m.</figcaption></figure>
+        <figure><img src="img/tesis/tunel-propuesta.png" alt="Modelo 3D del túnel modificado, con la cinta ensanchada a 1,6 m" loading="lazy"><figcaption>Propuesta: cinta de 1,6 m con cuatro carriles.</figcaption></figure>
+      </div>
+      <p><a class="btn" href="#diseno-3d">Ver los dos modelos en 3D →</a></p>
+
+      <h2>Cómo lo verifiqué</h2>
+      <p><strong>1. Capacidad de frío del túnel.</strong> Sumé todas las cargas de calor que el evaporador (46 kW) debe compensar: motores, paredes, infiltración de aire, fricción y luces. Al pasar más producto se agrandan las aberturas y entra más aire caliente, así que la capacidad disponible bajaba. Con cortinas de PVC vuelve a subir:</p>
+      <div class="tabla"><table>
+        <tr><th></th><th>Actual</th><th>Proyectada</th><th>Con cortinas de PVC</th></tr>
+        <tr><td>Calor por infiltración de aire</td><td>8 kW</td><td>13,34 kW</td><td>1,39 kW</td></tr>
+        <tr><td><b>Capacidad disponible del túnel</b></td><td><b>21,62 kW</b></td><td><b>16,28 kW</b></td><td><b>28,22 kW</b></td></tr>
+      </table></div>
+      <p>El túnel podría llegar a 3 000 kg/h, pero dejaría al evaporador al límite. Por eso recomendé <strong>2 500 kg/h</strong>.</p>
+
+      <p><strong>2. Comportamiento del aire (simulación en ANSYS).</strong> Modelé el túnel en SolidWorks y simulé el flujo de aire. Primero validé el modelo actual contra mediciones con anemómetro en la planta: entre 4,1 y 5,3 m/s sobre la cinta. Luego simulé la propuesta para ubicar cada tamaño de producto donde el aire es más favorable: los calibres más chicos van a los costados.</p>
+      <div class="pareja">
+        <figure><img src="img/tesis/ansys-actual.png" alt="Mapa de velocidades del aire en ANSYS para el túnel actual" loading="lazy"><figcaption>Velocidad del aire sobre la cinta: túnel actual.</figcaption></figure>
+        <figure><img src="img/tesis/ansys-propuesta.png" alt="Mapa de velocidades del aire en ANSYS para el túnel propuesto" loading="lazy"><figcaption>Velocidad del aire sobre la cinta: propuesta.</figcaption></figure>
+      </div>
+
+      <p><strong>3. Temperatura final del producto (Food Freezing).</strong> Con las velocidades del aire estimé a qué temperatura sale cada tamaño de chorito tras los ~96 s que pasa dentro del túnel. El resultado depende de la temperatura del aire del túnel, que varía según cuánto producto procese la planta:</p>
+      <div class="tabla"><table>
+        <tr><th>Aire en el túnel</th><th>Temperatura de salida del producto</th></tr>
+        <tr><td>−29 °C (mejor caso)</td><td>Todos llegan a −18 °C, salvo el calibre más grande (−17,4 °C)</td></tr>
+        <tr><td>−23 °C (peor caso)</td><td>Entre −13,3 °C y −17 °C según el calibre</td></tr>
+      </table></div>
+      <p>Aun en el peor caso, el producto llega a las cámaras de frío con una diferencia de unos <strong>5 °C</strong> respecto de los −18 °C, frente a los <strong>16 °C</strong> de antes (llegaba a −2 °C). Eso reduce las aglomeraciones, roturas, quemaduras y escarcha.</p>
+
+      <p><strong>4. Estructura (PTC Creo).</strong> Verifiqué que la estructura soporte la cinta más ancha y el producto. En el soporte de la cinta, el esfuerzo de trabajo es de 77 MPa frente a 205 MPa de fluencia del acero AISI 304: un <strong>factor de seguridad de 2,66</strong>, con una deflexión de 3,6 mm. En los perfiles que sostienen el techo, los ventiladores y el evaporador (~1 000 kg), los esfuerzos quedan entre 15 y 20 MPa y la deflexión bajo 0,5 mm.</p>
+      <div class="pareja">
+        <figure><img src="img/tesis/estructura-interior.png" alt="Estructura interior modificada del túnel y perfiles cuadrados" loading="lazy"><figcaption>Estructura interior modificada.</figcaption></figure>
+        <figure><img src="img/tesis/creo-desplazamiento.png" alt="Resultados de desplazamientos en PTC Creo sobre la estructura que soporta la cinta" loading="lazy"><figcaption>Desplazamientos en el soporte de la cinta.</figcaption></figure>
+      </div>
+
+      <p><strong>5. Comparación económica.</strong> Modificar el túnel cuesta <strong>$40.412.100</strong>, frente a unos <strong>$188.000.000</strong> (EUR 234.600) de un túnel nuevo: cerca del 21 % del costo.</p>
+
+      <h2>Resultado</h2>
+      <p>Recomendé modificar el túnel: mejora la calidad del producto y cuesta cerca de un 80 % menos que uno nuevo, siempre que la planta respete los flujos recomendados.</p>
+      <p class="note" style="color:var(--muted);font-size:14px;border-left:2px solid var(--tes);padding-left:12px">Limitaciones: la simulación en ANSYS usa la cinta estática y solo una porción de ella, por la capacidad de los computadores disponibles, así que las velocidades son una estimación. La temperatura del aire dentro del túnel tampoco se puede predecir con exactitud, por eso se trabajó con un rango.</p>
+    </div>
+    <aside class="side">
+      <div><div class="k">Tipo</div><div class="v">Proyecto de título · Ingeniería Civil Mecánica, Universidad Austral de Chile (2018)</div></div>
+      <div><div class="k">Herramientas</div><div class="v">SolidWorks, ANSYS CFX, Food Freezing, PTC Creo, AutoCAD</div></div>
+      <div><div class="k">Métodos</div><div class="v">Balance de cargas de refrigeración, simulación de fluidos (CFD), transferencia de calor, análisis estructural por elementos finitos</div></div>
+      <div><div class="k">Datos</div><div class="v">Mediciones en planta con anemómetro y termocuplas</div></div>
+      <a class="btn primary" href="#diseno-3d">Ver modelos en 3D</a>
+    </aside>
+  </div>
+</article>
+
 <!-- Caso app -->
 <article class="case wrap" id="al-articulo" hidden>
   <a class="back" href="#apps">← Volver a Aplicaciones y herramientas</a>
@@ -1119,7 +1247,7 @@ figcaption{font-size:13px;color:var(--muted);padding:10px 14px;border-top:1px so
 <script>
 (function(){
   var home=document.getElementById('home');
-  var cases={parada:document.getElementById('parada'),correa:document.getElementById('correa'),planificacion:document.getElementById('planificacion'),datos:document.getElementById('datos'),apps:document.getElementById('apps'),'diseno-3d':document.getElementById('diseno-3d'),'al-articulo':document.getElementById('al-articulo'),'machine-learning':document.getElementById('machine-learning'),rodamientos:document.getElementById('rodamientos'),'grietas-rotor':document.getElementById('grietas-rotor')};
+  var cases={tesis:document.getElementById('tesis'),parada:document.getElementById('parada'),correa:document.getElementById('correa'),planificacion:document.getElementById('planificacion'),datos:document.getElementById('datos'),apps:document.getElementById('apps'),'diseno-3d':document.getElementById('diseno-3d'),'al-articulo':document.getElementById('al-articulo'),'machine-learning':document.getElementById('machine-learning'),rodamientos:document.getElementById('rodamientos'),'grietas-rotor':document.getElementById('grietas-rotor')};
   function route(){
     var h=(location.hash||'').slice(1);
     var c=cases[h];
