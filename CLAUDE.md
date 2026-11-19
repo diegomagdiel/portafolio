@@ -20,7 +20,7 @@ Una sola página con HTML, CSS y JavaScript en el mismo archivo, sin herramienta
   - Para agregar una vista nueva: crear el `<section>`/`<article>` con `hidden` y sumarlo al objeto `cases` del script de rutas.
 - **Carpetas por área** (`.folder` en `#proyectos`): cada una tiene clase de color (`plan`, `data`, `apps`, `cad`, `ml`) y una ilustración SVG en línea que usa los tokens de color, así que cambia sola con la paleta.
 - **Tarjetas de proyecto** (`.card`): categoría, estado (`.status.ok` terminado, `.status.wip` en desarrollo), herramientas y métricas.
-- **Visor 3D** en `#diseno-3d`: three.js r128 desde cdnjs y OrbitControls desde jsDelivr. Hoy muestra un modelo de muestra; los modelos de SolidWorks se exportan como STL y se convierten para el visor.
+- **Visor 3D** en `#diseno-3d`: three.js r128 desde cdnjs, OrbitControls y GLTFLoader desde jsDelivr. Botones "Actual / Propuesta" alternan dos modelos de la tesis: `modelos/tunel-hardener-actual.glb` (situación actual, Figura 20, convertido desde `Hardener.IGS` con OpenCascade + trimesh) y `modelos/tunel-hardener-propuesta.glb` (propuesta, Figura 26, reconstruida desde `PropuestaV2.SLDASM` sin SolidWorks: los bloques internos van comprimidos con deflate crudo; `Contents/DisplayLists` trae la malla por pieza en coordenadas locales como tiras de triángulos, y el XML `swXmlContents` trae el árbol con `swTransform` para colocar cada instancia; se respetan los componentes ocultos salvo las paredes, que van como carcasa). Las mallas se llaman `carcasa`, `cinta`, `ventiladores` y `estructura`; el visor les asigna material por nombre y el botón "Carcasa" oculta la carcasa. Repo de la tesis (privado): `diegomagdiel/tesis-tunel-hardener`.
 
 ## Diseño
 - Estética moderna y oscura, temática tecnológica.
@@ -31,6 +31,6 @@ Una sola página con HTML, CSS y JavaScript en el mismo archivo, sin herramienta
 
 ## Pendientes conocidos
 - Carpeta de **Machine learning** (`#machine-learning`): publicados ① rodamientos y ② grietas en rotor, con gráficos en `img/ml/` y textos tomados de los README de cada repo (`DIEGO\extraccion-features-rodamientos`, `DIEGO\clasificacion-grietas-rotor`). Los repos del diplomado son privados, así que el sitio no los enlaza. Faltan ③–⑧, con el proyecto final de culatas como estrella; ver `DIEGO\diplomado-bigdata-confiabilidad\README.md`.
-- **Diseño 3D**: reemplazar el modelo de muestra por modelos reales de SolidWorks.
+- **Diseño 3D**: el visor ya muestra el túnel de la tesis. Falta una página de caso de estudio de la tesis y, opcionalmente, el modelo del túnel actual para comparar.
 - **Datos y Power BI**: primer dashboard publicado.
 - **Riesgo con Monte Carlo** (proyecto 3 de planificación).

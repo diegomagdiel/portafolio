@@ -213,7 +213,8 @@ a.card:hover{border-color:var(--fg-2);transform:translateY(-2px)}
 .viewer .vbar{position:absolute;left:12px;right:12px;bottom:12px;display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;pointer-events:none}
 .viewer .vbar > *{pointer-events:auto}
 .viewer .vtag{font-family:var(--mono);font-size:11.5px;color:var(--fg-2);background:color-mix(in srgb,var(--bg) 80%,transparent);border:1px solid var(--line);border-radius:6px;padding:5px 9px}
-.viewer .vbtns{display:flex;gap:6px}
+.viewer .vbtns{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}
+@media (max-width:520px){.viewer .vbtns{justify-content:flex-start}.viewer button{padding:5px 8px;font-size:12px}.viewer{aspect-ratio:4/5}}
 .viewer button{font:500 12.5px var(--body);color:var(--fg);background:color-mix(in srgb,var(--surface) 85%,transparent);border:1px solid var(--line);border-radius:6px;padding:6px 10px;cursor:pointer}
 .viewer button[aria-pressed="true"]{border-color:var(--cad);color:var(--cad)}
 .viewer .vfallback{position:absolute;inset:0;display:grid;place-items:center;color:var(--muted);font-family:var(--mono);font-size:12.5px;text-align:center;padding:16px}
@@ -533,7 +534,7 @@ figcaption{font-size:13px;color:var(--muted);padding:10px 14px;border-top:1px so
             <span class="cat cad" style="align-self:flex-start">Diseño 3D</span>
             <h3>Diseño 3D en SolidWorks</h3>
             <p>Piezas y conjuntos modelados en SolidWorks, que se pueden girar y explorar en 3D directamente en el navegador.</p>
-            <div class="fmeta"><span class="count">Visor listo · modelos en camino</span><span class="open">Abrir carpeta →</span></div>
+            <div class="fmeta"><span class="count">1 terminado · visor 3D</span><span class="open">Abrir carpeta →</span></div>
           </div>
         </a>
 <a class="folder ml" href="#machine-learning">
@@ -782,17 +783,17 @@ figcaption{font-size:13px;color:var(--muted);padding:10px 14px;border-top:1px so
   <div class="area-head">
     <div><span class="cat cad">Carpeta</span><h1>Diseño 3D en SolidWorks</h1><p>Modelos que se pueden girar, acercar y ver por dentro. Arrastra para rotar, usa la rueda o dos dedos para acercar.</p></div>
     <div class="viewer" id="viewer">
-      <canvas id="cad-canvas" aria-label="Visor 3D interactivo con un modelo de muestra de una estación de polines"></canvas>
+      <canvas id="cad-canvas" aria-label="Visor 3D interactivo del túnel de congelación HARDENER, con botones para alternar entre la situación actual y la propuesta, y para ocultar la carcasa"></canvas>
       <div class="vfallback" id="vfallback" hidden>El visor 3D no pudo cargarse en este navegador.</div>
       <div class="vbar">
-        <span class="vtag">Modelo de muestra · estación de polines en artesa 35°</span>
-        <div class="vbtns"><button type="button" id="btn-wire" aria-pressed="false">Vista alámbrica</button><button type="button" id="btn-spin" aria-pressed="true">Girar</button></div>
+        <span class="vtag">Túnel HARDENER · propuesta (cinta de 1,6 m)</span>
+        <div class="vbtns"><button type="button" data-modelo="actual" aria-pressed="false">Actual</button><button type="button" data-modelo="propuesta" aria-pressed="true">Propuesta</button><button type="button" id="btn-shell" aria-pressed="true">Carcasa</button><button type="button" id="btn-wire" aria-pressed="false">Alámbrica</button><button type="button" id="btn-spin" aria-pressed="true">Girar</button></div>
       </div>
     </div>
   </div>
-  <p style="color:var(--muted);font-size:14px;margin:-18px 0 28px">El modelo del visor es una muestra para probar cómo se verán los proyectos; no es un trabajo de SolidWorks. Tus modelos lo reemplazarán.</p>
+  <p style="color:var(--muted);font-size:14px;margin:-18px 0 28px">Modelos en SolidWorks de mi proyecto de título. Compara el túnel <b>actual</b>, con su cinta de 0,9 m, con la <b>propuesta</b>: una cinta de 1,6 m para que entren las cuatro líneas de producto, con ductos bajo cada ventilador. Apaga la carcasa para ver el interior.</p>
   <div class="grid" style="padding-bottom:64px">
-    <div class="card"><div class="thumb empty">Buscando archivos</div><div class="body"><div class="tagrow"><span class="cat cad">Diseño 3D</span><span class="status wip">En preparación</span></div><h3>Modelos anteriores en SolidWorks</h3><p>Piezas y ensambles que ya diseñé, exportados para verlos en 3D aquí mismo, con sus planos y una breve explicación de cada uno.</p><div class="tools"><span>SolidWorks</span></div></div></div>
+    <div class="card"><div class="thumb"><img src="img/tesis-tunel-propuesta.png" alt="Modelo 3D en SolidWorks del túnel de congelación modificado, con tres ventiladores y la cinta ensanchada"></div><div class="body"><div class="tagrow"><span class="cat cad">Proyecto de título</span><span class="status ok">Terminado</span></div><h3>Rediseño del túnel de congelación de una planta de mejillones</h3><p>Dos de las cuatro cintas pasaban por fuera del túnel y el producto no llegaba a −18 °C. Propuse ensanchar la cinta de 0,9 a 1,6 m y verifiqué la idea con cálculo térmico, simulación del aire en ANSYS y análisis estructural, por cerca del 21 % del costo de un túnel nuevo.</p><div class="tools"><span>SolidWorks</span><span>ANSYS</span><span>PTC Creo</span></div><div class="metrics"><div><b>2 500 kg/h</b><span>flujo recomendado</span></div><div><b>0,9 → 1,6 m</b><span>ancho de cinta</span></div><div><b>$40 M</b><span>vs $188 M</span></div></div></div></div>
     <div class="card"><div class="thumb empty">Próximo modelo</div><div class="body"><div class="tagrow"><span class="cat cad">Diseño 3D</span><span class="status">Planificado</span></div><h3>Polín de carga para la correa CV-05</h3><p>Modelar en SolidWorks el polín de la correa del proyecto de valor ganado, para unir el diseño de la pieza con la planificación de su montaje.</p><div class="tools"><span>SolidWorks</span><span>Planos</span></div></div></div>
   </div>
 </section>
@@ -1137,6 +1138,7 @@ figcaption{font-size:13px;color:var(--muted);padding:10px 14px;border-top:1px so
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
 <script>
 (function(){
   var started=false, area=document.getElementById('diseno-3d');
@@ -1149,34 +1151,54 @@ figcaption{font-size:13px;color:var(--muted);padding:10px 14px;border-top:1px so
     try{renderer=new THREE.WebGLRenderer({canvas:canvas,antialias:true,alpha:true});}catch(e){document.getElementById('vfallback').hidden=false;return;}
     renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,2));
     var scene=new THREE.Scene();
-    var camera=new THREE.PerspectiveCamera(35,1,0.1,100); camera.position.set(3.2,2.2,3.6);
+    var camera=new THREE.PerspectiveCamera(35,1,0.1,200); camera.position.set(7.5,5.5,8);
     var controls=THREE.OrbitControls?new THREE.OrbitControls(camera,canvas):null;
-    if(controls){controls.enableDamping=true;controls.target.set(0,0.35,0);controls.autoRotate=!window.matchMedia('(prefers-reduced-motion: reduce)').matches;controls.autoRotateSpeed=1.2;controls.minDistance=2.2;controls.maxDistance=9;}
+    if(controls){controls.enableDamping=true;controls.target.set(0,1.2,0);controls.autoRotate=!window.matchMedia('(prefers-reduced-motion: reduce)').matches;controls.autoRotateSpeed=1.2;controls.minDistance=3;controls.maxDistance=20;controls.maxPolarAngle=Math.PI/2-0.04;}
+    scene.add(new THREE.AmbientLight(0xffffff,0.35));
     scene.add(new THREE.HemisphereLight(0xcfe6ff,0x1a2233,0.9));
     var key=new THREE.DirectionalLight(0xffffff,0.9); key.position.set(4,6,3); scene.add(key);
     var rim=new THREE.DirectionalLight(new THREE.Color(css('--cad')),0.6); rim.position.set(-4,2,-3); scene.add(rim);
-    var steel=new THREE.MeshStandardMaterial({color:0x8d99a8,metalness:0.75,roughness:0.35});
-    var frameM=new THREE.MeshStandardMaterial({color:new THREE.Color(css('--cad')),metalness:0.3,roughness:0.55});
-    var dark=new THREE.MeshStandardMaterial({color:0x2a3240,metalness:0.4,roughness:0.6});
-    var model=new THREE.Group(), mats=[steel,frameM,dark];
-    function roller(len){var g=new THREE.Group();
-      var shell=new THREE.Mesh(new THREE.CylinderGeometry(0.19,0.19,len,48,1,false),steel); shell.rotation.z=Math.PI/2; g.add(shell);
-      [-1,1].forEach(function(sd){var cap=new THREE.Mesh(new THREE.CylinderGeometry(0.17,0.17,0.02,48),dark); cap.rotation.z=Math.PI/2; cap.position.x=sd*(len/2+0.005); g.add(cap);
-        var sh=new THREE.Mesh(new THREE.CylinderGeometry(0.035,0.035,0.16,16),dark); sh.rotation.z=Math.PI/2; sh.position.x=sd*(len/2+0.08); g.add(sh);});
-      return g;}
-    var L=0.76, ang=35*Math.PI/180;
-    var c=roller(L); c.position.set(0,0.42,0); model.add(c);
-    [-1,1].forEach(function(sd){var r=roller(L); r.rotation.z=sd*ang;
-      var cx=sd*(L/2+0.13+Math.cos(ang)*L/2), cy=0.42+Math.sin(ang)*L/2+0.03; r.position.set(cx,cy,0); model.add(r);});
-    var base=new THREE.Mesh(new THREE.BoxGeometry(2.3,0.08,0.22),frameM); base.position.y=0.04; model.add(base);
-    [-1,1].forEach(function(sd){[0.47,1.12].forEach(function(xx,i){var h=i?0.82:0.4; var p=new THREE.Mesh(new THREE.BoxGeometry(0.05,h,0.16),frameM); p.position.set(sd*xx,0.08+h/2,0); model.add(p);});
-      var foot=new THREE.Mesh(new THREE.BoxGeometry(0.22,0.03,0.4),dark); foot.position.set(sd*1.05,0.015,0); model.add(foot);});
-    model.position.y=-0.1; scene.add(model);
-    var grid=new THREE.GridHelper(6,24,new THREE.Color(css('--line')),new THREE.Color(css('--line'))); grid.position.y=-0.1; scene.add(grid);
+    // Materiales por parte del modelo (los colores siguen la paleta activa)
+    var dbl=THREE.DoubleSide;
+    var M={
+      carcasa:new THREE.MeshStandardMaterial({color:0xcfd8e3,metalness:0.1,roughness:0.6,transparent:true,opacity:0.16,depthWrite:false,side:dbl}),
+      cinta:new THREE.MeshStandardMaterial({color:0xaab4c2,metalness:0.15,roughness:0.55,side:dbl}),
+      ventiladores:new THREE.MeshStandardMaterial({color:new THREE.Color(css('--cad')),metalness:0.1,roughness:0.5,side:dbl}),
+      estructura:new THREE.MeshStandardMaterial({color:0x8a95a5,metalness:0.15,roughness:0.6,side:dbl})
+    };
+    var mats=Object.keys(M).map(function(k){return M[k];});
+    var grid=new THREE.GridHelper(12,24,new THREE.Color(css('--line')),new THREE.Color(css('--line'))); scene.add(grid);
+    // Dos modelos de la tesis: situación actual y propuesta. Se cargan una vez y se alterna cuál se ve.
+    var modelos={
+      actual:{archivo:'modelos/tunel-hardener-actual.glb',etiqueta:'Túnel HARDENER · situación actual (cinta de 0,9 m)'},
+      propuesta:{archivo:'modelos/tunel-hardener-propuesta.glb',etiqueta:'Túnel HARDENER · propuesta (cinta de 1,6 m)'}
+    };
+    var actual=null, tag=document.querySelector('#viewer .vtag'), shellBtn=document.getElementById('btn-shell');
+    function aplicarCarcasa(){var on=shellBtn.getAttribute('aria-pressed')==='true'; Object.keys(modelos).forEach(function(k){if(modelos[k].carcasa) modelos[k].carcasa.forEach(function(o){o.visible=on;});});}
+    function mostrar(k){
+      actual=k; tag.textContent=modelos[k].etiqueta;
+      document.querySelectorAll('[data-modelo]').forEach(function(btn){btn.setAttribute('aria-pressed',btn.getAttribute('data-modelo')===k);});
+      Object.keys(modelos).forEach(function(j){if(modelos[j].escena) modelos[j].escena.visible=(j===k);});
+      if(modelos[k].escena||!THREE.GLTFLoader) return;
+      new THREE.GLTFLoader().load(modelos[k].archivo,function(gltf){
+        modelos[k].carcasa=[];
+        gltf.scene.traverse(function(o){
+          if(!o.isMesh) return;
+          var parte=Object.keys(M).filter(function(p){return (o.name+' '+(o.parent?o.parent.name:'')).indexOf(p)>=0;})[0]||'estructura';
+          o.geometry.computeVertexNormals();
+          o.material=M[parte]; if(parte==='carcasa') modelos[k].carcasa.push(o);
+        });
+        modelos[k].escena=gltf.scene; gltf.scene.visible=(actual===k); scene.add(gltf.scene); aplicarCarcasa();
+      },undefined,function(){document.getElementById('vfallback').hidden=false;});
+    }
+    if(!THREE.GLTFLoader){ document.getElementById('vfallback').hidden=false; }
+    document.querySelectorAll('[data-modelo]').forEach(function(btn){btn.addEventListener('click',function(){mostrar(btn.getAttribute('data-modelo'));});});
+    mostrar('propuesta');
     function size(){var w=box.clientWidth,h=box.clientHeight; renderer.setSize(w,h,false); camera.aspect=w/h; camera.updateProjectionMatrix();}
     size(); window.addEventListener('resize',size);
     var wire=document.getElementById('btn-wire'), spin=document.getElementById('btn-spin');
     wire.addEventListener('click',function(){var on=wire.getAttribute('aria-pressed')!=='true'; wire.setAttribute('aria-pressed',on);mats.forEach(function(m){m.wireframe=on;});});
+    shellBtn.addEventListener('click',function(){var on=shellBtn.getAttribute('aria-pressed')!=='true'; shellBtn.setAttribute('aria-pressed',on); aplicarCarcasa();});
     if(controls){spin.setAttribute('aria-pressed',controls.autoRotate);spin.addEventListener('click',function(){controls.autoRotate=!controls.autoRotate;spin.setAttribute('aria-pressed',controls.autoRotate);});}
     (function loop(){requestAnimationFrame(loop); if(area.hidden) return; if(controls) controls.update(); renderer.render(scene,camera);})();
   }
