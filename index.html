@@ -957,7 +957,7 @@ figcaption{font-size:13px;color:var(--muted);padding:10px 14px;border-top:1px so
           <div class="thumb"><img src="img/ml/rod-portada.jpg" alt="Espectrogramas de vibración de un rodamiento normal y con fallas en pista interna y externa"></div>
           <div class="body">
             <div class="tagrow"><span class="cat ml">Señales · ML</span><span class="status ok">Terminado</span></div>
-            <h3>Rodamientos: de la extracción de features a un modelo de predicción de fallas</h3>
+            <h3>Diagnóstico y predicción de fallas en rodamientos a partir de su vibración</h3>
             <p>Revisé mi trabajo de 2022 con las 60 grabaciones del dataset y armé un modelo que diagnostica 5 estados de un rodamiento, probado con velocidades que nunca vio.</p>
             <div class="tools"><span>Python</span><span>SciPy</span><span>scikit-learn</span><span>PyWavelets</span></div>
             <div class="metrics"><div><b>15 / 15</b><span>grabaciones nuevas</span></div><div><b>60</b><span>grabaciones</span></div><div><b>5</b><span>estados</span></div></div>
@@ -1063,7 +1063,7 @@ figcaption{font-size:13px;color:var(--muted);padding:10px 14px;border-top:1px so
 <article class="case wrap" id="rodamientos" hidden>
   <a class="back" href="#machine-learning">← Volver a Machine learning</a>
   <div class="tagrow" style="justify-content:flex-start;gap:12px"><span class="cat ml">Señales · ML</span><span class="status ok">Terminado</span></div>
-  <h1>Rodamientos: de la extracción de features a un modelo de predicción de fallas</h1>
+  <h1>Diagnóstico y predicción de fallas en rodamientos a partir de su vibración</h1>
   <p class="lead">Un rodamiento con un defecto produce un golpe cada vez que un elemento rodante pasa por la falla. ¿Se puede construir un modelo que, solo con la vibración, diga si está normal o qué falla tiene, y que funcione en grabaciones que nunca vio?</p>
   <div class="kpis">
     <div><b>15 de 15</b><span>grabaciones de un perfil de velocidad nunca visto, bien diagnosticadas</span></div>
@@ -1077,6 +1077,11 @@ figcaption{font-size:13px;color:var(--muted);padding:10px 14px;border-top:1px so
       <p>El dataset público de la Universidad de Ottawa (Huang y Baddour, 2018) tiene grabaciones de vibración de un rodamiento en cinco estados: normal, falla en la pista interna, en la pista externa, en las bolas y falla combinada. El eje cambia de velocidad durante cada grabación, siguiendo cuatro perfiles: acelera, frena, acelera y frena, o frena y acelera.</p>
       <p>El proyecto tiene dos partes: el <strong>trabajo original de 2022</strong> del diplomado, tal como se entregó, y una <strong>revisión</strong> que lo convierte en un modelo de predicción.</p>
       <figure><img src="img/ml/rod-dataset.png" alt="Cuadrícula de 60 grabaciones: 5 estados por 4 perfiles de velocidad y 3 repeticiones; destacadas las 5 usadas en 2022" loading="lazy"><figcaption>Las 60 grabaciones del dataset. En 2022 usé solo las 5 destacadas, una por estado.</figcaption></figure>
+
+      <h2>Reducción de dimensión</h2>
+      <p>En el trabajo original corté cada señal en tramos de 0,2 s y describí cada tramo con su espectro: <strong>999 frecuencias</strong>, de 5 a 4.995 Hz. Para poder verlo, resumí esa matriz en 3 componentes con <strong>PCA, Kernel PCA y LDA</strong>, y así cada tramo pasa a ser un punto en 3D.</p>
+      <figure><img src="img/ml/rod-reduccion.png" alt="Esquema: matriz de 250 tramos por 999 frecuencias, reducida con PCA, Kernel PCA o LDA a 250 tramos por 3 componentes, que se grafican como puntos agrupados por estado" loading="lazy"><figcaption>De 250 × 999 valores a 250 × 3: cada componente nueva combina todas las frecuencias.</figcaption></figure>
+      <p>PCA no logra separar todos los estados; Kernel PCA los separa sin usar etiquetas. LDA, ajustado con el 70 % inicial de cada estado, clasifica bien <strong>73 de 75</strong> tramos que no vio; los 2 errores son tramos de la falla combinada que confunde con pista externa.</p>
 
       <h2>Qué estaba mal en el trabajo original</h2>
       <p>Con <strong>una sola grabación por estado</strong> no se puede saber si un indicador reconoce la falla o la grabación. El caso más claro es la <strong>media</strong> de la señal: parecía separar los estados, pero en realidad mide el desfase eléctrico de cada grabación. Con las 60 grabaciones se ve que casi toda su variación ocurre entre grabaciones y no entre estados.</p>
@@ -1109,7 +1114,7 @@ figcaption{font-size:13px;color:var(--muted);padding:10px 14px;border-top:1px so
     <aside class="side">
       <div><div class="k">Tipo</div><div class="v">Diagnóstico de fallas por vibración</div></div>
       <div><div class="k">Herramientas</div><div class="v">Python, SciPy, scikit-learn, PyWavelets, pandas</div></div>
-      <div><div class="k">Métodos</div><div class="v">Seguimiento de órdenes, envolvente, energías wavelet, bandas de frecuencia, SVM, validación dejando fuera grabaciones y perfiles de velocidad</div></div>
+      <div><div class="k">Métodos</div><div class="v">PCA, Kernel PCA y LDA, seguimiento de órdenes, envolvente, energías wavelet, bandas de frecuencia, SVM, validación dejando fuera grabaciones y perfiles de velocidad</div></div>
       <div><div class="k">Datos</div><div class="v">Públicos: Universidad de Ottawa (Huang y Baddour, 2018)</div></div>
       <div><div class="k">Origen</div><div class="v">Diplomado Big Data Analytics, U. de Chile · Módulo 2</div></div>
     </aside>
