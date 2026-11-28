@@ -958,9 +958,9 @@ figcaption{font-size:13px;color:var(--muted);padding:10px 14px;border-top:1px so
           <div class="body">
             <div class="tagrow"><span class="cat ml">Señales · ML</span><span class="status ok">Terminado</span></div>
             <h3>Diagnóstico y predicción de fallas en rodamientos a partir de su vibración</h3>
-            <p>Revisé mi trabajo de 2022 con las 60 grabaciones del dataset y armé un modelo que diagnostica 5 estados de un rodamiento, probado con velocidades que nunca vio.</p>
+            <p>Analicé la vibración de un rodamiento en el tiempo, la frecuencia y el tiempo-frecuencia, reduje sus parámetros con PCA, Kernel PCA y LDA, y armé un modelo que diagnostica 5 estados con velocidades que nunca vio.</p>
             <div class="tools"><span>Python</span><span>SciPy</span><span>scikit-learn</span><span>PyWavelets</span></div>
-            <div class="metrics"><div><b>15 / 15</b><span>grabaciones nuevas</span></div><div><b>60</b><span>grabaciones</span></div><div><b>5</b><span>estados</span></div></div>
+            <div class="metrics"><div><b>600 / 600</b><span>ventanas no vistas</span></div><div><b>60</b><span>grabaciones</span></div><div><b>5</b><span>estados</span></div></div>
           </div>
         </a><a class="card" href="#grietas-rotor">
           <div class="thumb"><img src="img/ml/rotor-portada.jpg" alt="Fronteras de decisión de KNN y árbol de decisión para cuatro estados de un rotor"></div>
@@ -1064,58 +1064,70 @@ figcaption{font-size:13px;color:var(--muted);padding:10px 14px;border-top:1px so
   <a class="back" href="#machine-learning">← Volver a Machine learning</a>
   <div class="tagrow" style="justify-content:flex-start;gap:12px"><span class="cat ml">Señales · ML</span><span class="status ok">Terminado</span></div>
   <h1>Diagnóstico y predicción de fallas en rodamientos a partir de su vibración</h1>
-  <p class="lead">Un rodamiento con un defecto produce un golpe cada vez que un elemento rodante pasa por la falla. ¿Se puede construir un modelo que, solo con la vibración, diga si está normal o qué falla tiene, y que funcione en grabaciones que nunca vio?</p>
+  <p class="lead">Cuando un rodamiento tiene un defecto, cada vez que una bola pasa por la falla se produce un golpe, y ese golpe queda registrado en la vibración. ¿Se puede usar esa vibración para saber en qué estado está el rodamiento, aunque la máquina cambie de velocidad?</p>
   <div class="kpis">
-    <div><b>15 de 15</b><span>grabaciones de un perfil de velocidad nunca visto, bien diagnosticadas</span></div>
-    <div><b>100 %</b><span>exactitud balanceada dejando fuera un perfil completo</span></div>
-    <div><b>60</b><span>grabaciones, frente a 5 en el trabajo original</span></div>
-    <div><b>~21 %</b><span>con la velocidad sola (control; el azar es 20 %)</span></div>
+    <div><b>600 de 600</b><span>ventanas bien clasificadas con perfiles de velocidad que el modelo no vio</span></div>
+    <div><b>73 de 75</b><span>tramos no vistos bien clasificados con LDA</span></div>
+    <div><b>60</b><span>grabaciones: 5 estados × 4 perfiles de velocidad × 3 repeticiones</span></div>
+    <div><b>15</b><span>parámetros en el modelo final (wavelet y envolvente por órdenes)</span></div>
   </div>
   <div class="case-grid">
     <div class="prose">
-      <h2>El problema</h2>
-      <p>El dataset público de la Universidad de Ottawa (Huang y Baddour, 2018) tiene grabaciones de vibración de un rodamiento en cinco estados: normal, falla en la pista interna, en la pista externa, en las bolas y falla combinada. El eje cambia de velocidad durante cada grabación, siguiendo cuatro perfiles: acelera, frena, acelera y frena, o frena y acelera.</p>
-      <p>El proyecto tiene dos partes: el <strong>trabajo original de 2022</strong> del diplomado, tal como se entregó, y una <strong>revisión</strong> que lo convierte en un modelo de predicción.</p>
-      <figure><img src="img/ml/rod-dataset.png" alt="Cuadrícula de 60 grabaciones: 5 estados por 4 perfiles de velocidad y 3 repeticiones; destacadas las 5 usadas en 2022" loading="lazy"><figcaption>Las 60 grabaciones del dataset. En 2022 usé solo las 5 destacadas, una por estado.</figcaption></figure>
+      <h2>Las señales</h2>
+      <p>El dataset público de la Universidad de Ottawa (Huang y Baddour, 2018) tiene grabaciones de vibración de un rodamiento en cinco estados: <strong>normal, falla en la pista interna, en la pista externa, en las bolas y falla combinada</strong>. Cada archivo trae la vibración medida por un acelerómetro y la señal de un encoder, que entrega pulsos a medida que gira el eje y permite calcular su velocidad.</p>
+      <p>Las grabaciones vienen a 200 kHz, sin valores faltantes ni infinitos. Las bajé a <strong>10 kHz</strong> con un filtro anti-aliasing, para que las frecuencias altas no aparezcan como frecuencias falsas, y corté cada señal en tramos para tener varias muestras por estado.</p>
+      <figure><img src="img/ml/rod-senales.png" alt="Vibración de 10 segundos de cada estado: pista interna y combinada muestran mucha más amplitud y golpes que normal, pista externa y bolas" loading="lazy"><figcaption>La vibración de cada estado durante 10 s.</figcaption></figure>
+
+      <h2>Dominio temporal</h2>
+      <p>En cada tramo calculé 8 parámetros estadísticos: RMS, pico, pico a pico, factor de cresta, varianza, curtosis, media y asimetría.</p>
+      <figure><img src="img/ml/rod-temporal.png" alt="Gráficos de cajas de los 8 parámetros temporales por estado; la falla combinada destaca en curtosis y factor de cresta, y la pista interna en RMS, pico y varianza" loading="lazy"><figcaption>Los 8 parámetros por estado, cada uno con su propia escala.</figcaption></figure>
+      <ul>
+        <li><strong>Falla combinada:</strong> la más fácil de reconocer, con la curtosis (≈39, contra ≈3 del sano) y el factor de cresta más altos.</li>
+        <li><strong>Pista interna:</strong> se reconoce por la energía: su RMS es ≈3,5 veces el del sano.</li>
+        <li><strong>Pista externa:</strong> casi la misma energía que el sano, pero más golpes (curtosis ≈7).</li>
+        <li><strong>Bolas:</strong> casi igual al sano en todos los parámetros. Es la falla más difícil de detectar en el tiempo.</li>
+        <li><strong>Media y asimetría</strong> no sirven: la media cambia por el desfase del sensor, no por la falla.</li>
+      </ul>
+
+      <h2>Dominio de la frecuencia</h2>
+      <p>Una falla golpea siempre al mismo ritmo, así que su efecto aparece en frecuencias específicas. Calculé la FFT de cada tramo (con ventana Hann) y dividí el rango hasta 5.000 Hz en 8 bandas.</p>
+      <figure><img src="img/ml/rod-frecuencia.png" alt="Amplitud promedio en 8 bandas de frecuencia por estado, en escala logarítmica; en la banda de 1.250 a 1.875 Hz los cinco estados quedan separados" loading="lazy"><figcaption>Amplitud promedio por banda, en escala logarítmica.</figcaption></figure>
+      <p>La zona más útil está entre <strong>1.250 y 1.875 Hz</strong>: ahí los 5 estados quedan separados. La falla en bolas, que en el tiempo era casi igual al sano, aquí <strong>sí se distingue</strong>. El dominio de la frecuencia separa mejor las fallas que el temporal.</p>
+
+      <h2>Tiempo-frecuencia</h2>
+      <p>El espectrograma muestra cuándo aparece cada frecuencia: el tiempo en el eje horizontal, la frecuencia en el vertical y la energía en el color, con la misma escala para los 5 estados.</p>
+      <figure><img src="img/ml/rod-espectrogramas.jpg" alt="Espectrogramas de los primeros 2 segundos de cada estado; pista interna, pista externa y combinada muestran líneas verticales periódicas" loading="lazy"><figcaption>Los primeros 2 s de cada estado. Las líneas verticales son los golpes de la falla.</figcaption></figure>
+      <p>En pista interna, pista externa y combinada aparecen <strong>líneas verticales</strong> que se repiten: cada una es un golpe de la falla. Normal y bolas se ven parecidos; su diferencia está en la amplitud, que se ve mejor en la frecuencia.</p>
 
       <h2>Reducción de dimensión</h2>
-      <p>En el trabajo original corté cada señal en tramos de 0,2 s y describí cada tramo con su espectro: <strong>999 frecuencias</strong>, de 5 a 4.995 Hz. Para poder verlo, resumí esa matriz en 3 componentes con <strong>PCA, Kernel PCA y LDA</strong>, y así cada tramo pasa a ser un punto en 3D.</p>
+      <p>Para no perder información usé el espectro completo de cada tramo de 0,2 s: <strong>999 frecuencias</strong>, de 5 a 4.995 Hz. Para poder verlo, resumí esa matriz en 3 componentes con <strong>PCA, Kernel PCA y LDA</strong>, y así cada tramo pasa a ser un punto en 3D.</p>
       <figure><img src="img/ml/rod-reduccion.png" alt="Esquema: matriz de 250 tramos por 999 frecuencias, reducida con PCA, Kernel PCA o LDA a 250 tramos por 3 componentes, que se grafican como puntos agrupados por estado" loading="lazy"><figcaption>De 250 × 999 valores a 250 × 3: cada componente nueva combina todas las frecuencias.</figcaption></figure>
       <figure><img src="img/ml/rod-reduccion-3d.png" alt="Tres gráficos 3D de los 250 tramos coloreados por estado: con PCA se mezclan pista externa y falla combinada; con Kernel PCA quedan 5 grupos separados; con LDA los tramos no vistos, con borde negro, caen en su grupo salvo dos" loading="lazy"><figcaption>Los 250 tramos en 3 componentes según cada método. En LDA, los puntos con borde negro son los tramos que no vio al ajustarse.</figcaption></figure>
-      <p>PCA no logra separar todos los estados; Kernel PCA los separa sin usar etiquetas. LDA, ajustado con el 70 % inicial de cada estado, clasifica bien <strong>73 de 75</strong> tramos que no vio; los 2 errores son tramos de la falla combinada que confunde con pista externa.</p>
-
-      <h2>Qué estaba mal en el trabajo original</h2>
-      <p>Con <strong>una sola grabación por estado</strong> no se puede saber si un indicador reconoce la falla o la grabación. El caso más claro es la <strong>media</strong> de la señal: parecía separar los estados, pero en realidad mide el desfase eléctrico de cada grabación. Con las 60 grabaciones se ve que casi toda su variación ocurre entre grabaciones y no entre estados.</p>
-
-      <h2>Lo que hice en la revisión</h2>
       <ul>
-        <li>Usé las <strong>60 grabaciones</strong>: 5 estados × 4 perfiles de velocidad × 3 repeticiones.</li>
-        <li>Apliqué <strong>seguimiento de órdenes</strong> con el encoder: remuestreé la envolvente según el ángulo del eje, y así cada falla aparece en un múltiplo fijo de la velocidad (5,44× en pista interna y ≈3,45× en pista externa).</li>
-        <li>Armé un catálogo de <strong>38 indicadores</strong> (temporales, bandas de frecuencia, energías wavelet y envolvente por órdenes) y evalué cada uno con 4 criterios: poder de diagnóstico, huella de grabación, dependencia de la velocidad y costo de cálculo.</li>
-        <li>Comparé <strong>7 conjuntos de indicadores con 6 modelos</strong>, validando por grabación. La prueba más exigente deja fuera un perfil de velocidad completo.</li>
-        <li>Guardé el modelo final con una función <code>diagnosticar()</code> que recibe una grabación nueva y entrega el estado y la confianza.</li>
+        <li><strong>PCA</strong> no logra separar los 5 estados: sus 3 componentes conservan solo ≈52 % de la información.</li>
+        <li><strong>Kernel PCA</strong> separa los 5 estados con claridad, incluidos normal y bolas, sin usar las etiquetas.</li>
+        <li><strong>LDA</strong> reúne el 96 % de la separación en 3 componentes. Ajustado con el 70 % inicial de cada estado, clasifica bien <strong>73 de 75</strong> tramos que no vio; los 2 errores son tramos de la falla combinada que confunde con pista externa.</li>
       </ul>
-      <figure><img src="img/ml/rod-ordenes.png" alt="Envolvente de una falla de pista interna: en Hz la falla se embarra; en órdenes aparecen picos nítidos en 5,44 y su doble" loading="lazy"><figcaption>Con el eje acelerando, en Hz la falla se embarra; en órdenes aparece como un pico nítido en 5,44× y su doble.</figcaption></figure>
 
-      <h2>Resultado</h2>
-      <p>El modelo elegido combina <strong>energías wavelet y envolvente por órdenes, con SVM</strong>: 15 indicadores y unos 10 ms de cálculo por segundo de señal. Clasifica el 100 % de las ventanas tanto dejando fuera una repetición como un perfil de velocidad completo.</p>
-      <p>Más indicadores no es mejor: con todos juntos baja a 98,2 %, porque los de energía absoluta (RMS, bandas) dependen mucho de la velocidad.</p>
-      <figure><img src="img/ml/rod-modelos.png" alt="Mapa de calor de exactitud balanceada para 7 conjuntos de indicadores y 6 modelos; el modelo elegido, wavelet más envolvente con SVM, llega a 100 %" loading="lazy"><figcaption>Exactitud dejando fuera un perfil de velocidad completo. El recuadro marca el modelo elegido.</figcaption></figure>
-      <p><strong>Demostración:</strong> entrené el modelo sin el perfil D y luego le pedí diagnosticar esas 15 grabaciones. Acertó las <strong>15</strong>, la mayoría con más de 90 % de confianza.</p>
-      <figure><img src="img/ml/rod-perfil-d.png" alt="Diagnóstico de 15 grabaciones del perfil D: cada una asignada a su estado correcto con probabilidades entre 83 y 98 %" loading="lazy"><figcaption>Probabilidad que el modelo asigna a cada estado en las 15 grabaciones del perfil D, que no vio al entrenar.</figcaption></figure>
-
-      <h2>Controles</h2>
-      <p>La <strong>velocidad sola</strong> acierta como el azar (~21 %), así que el modelo no se apoya en la forma de operar la máquina. La <strong>media sola</strong> acierta entre 49 y 61 % sin ninguna razón física, lo que confirma que reconoce la grabación y no la falla. Por eso quedó fuera.</p>
-      <figure><img src="img/ml/rod-controles.png" alt="Barras de exactitud de los controles: velocidad sola 21 a 22 %, media sola 49 a 61 %, con la línea del azar en 20 %" loading="lazy"><figcaption>Controles con un solo dato por ventana. La línea marca el azar (20 %).</figcaption></figure>
+      <h2>Modelo de predicción de fallas</h2>
+      <p>Hasta aquí trabajé con <strong>una sola grabación por estado</strong>, y así cualquier diferencia entre grabaciones puede confundirse con la falla. El caso más claro es la <strong>media</strong>: es solo el desfase del sensor, pero como cada grabación tiene uno distinto, un modelo podría usarla para "acertar" el 100 % sin saber nada de rodamientos.</p>
+      <p>Por eso el modelo usa las <strong>60 grabaciones</strong> del dataset: 5 estados × 4 perfiles de velocidad (acelera, frena, acelera y frena, frena y acelera) × 3 repeticiones. Cada grabación se corta en ventanas de 1 s: <strong>600 en total</strong>. En cada una calculo <strong>15 parámetros</strong>:</p>
+      <ul>
+        <li><strong>8 energías wavelet:</strong> qué porcentaje de la energía cae en cada banda. Describen la forma del espectro, no su tamaño, y por eso cambian poco con la velocidad.</li>
+        <li><strong>7 de envolvente por órdenes:</strong> la firma de cada falla. Un defecto golpea a un ritmo que es múltiplo de la velocidad del eje (≈5,44 golpes por vuelta en la pista interna y ≈3,45 en la externa); con el encoder mido esos picos aunque la velocidad cambie.</li>
+      </ul>
+      <p>La prueba es la más exigente: <strong>entreno sin un perfil de velocidad completo y lo pruebo con ese perfil</strong>, en 4 rondas. Así cada ventana recibe una predicción de un modelo que no conocía su perfil. SVM y KNN aciertan las 600 ventanas, y LDA y Random Forest fallan solo una. Elegí <strong>SVM</strong> porque es más liviano en terreno: solo guarda la frontera entre los estados.</p>
+      <figure><img src="img/ml/rod-confusion.png" alt="Matriz de confusión del SVM: 120 ventanas en la diagonal para cada uno de los 5 estados y cero errores" loading="lazy" style="max-width:420px"><figcaption>Matriz de confusión del SVM con perfiles de velocidad no vistos: todas las ventanas en la diagonal.</figcaption></figure>
+      <p><strong>Lo que más pesa son los parámetros, no el modelo.</strong> Con los mismos 60 archivos, los modelos que usaban solo la envolvente se quedaban cerca del 77 %. Lo que hace funcionar a cualquier modelo es combinar datos variados con parámetros que reflejen la física de la falla.</p>
 
       <h2>Qué significa para mantenimiento</h2>
       <p>Con un acelerómetro y un encoder, el modelo dice <strong>qué falla tiene el rodamiento y dónde está</strong> (pista interna, externa, bolas o combinada), aunque la máquina cambie de velocidad. Eso permite programar el cambio en una detención planificada en vez de hacerlo como una correctiva.</p>
-      <p class="note">Limitaciones: hay <strong>un solo rodamiento físico por estado</strong>, así que el modelo podría reconocer en parte ese ejemplar además del tipo de falla. Son datos de laboratorio, de una máquina sin carga variable y con fallas inducidas; en planta hay que reentrenar con datos propios. Ante una falla distinta de las 5 conocidas elegirá igual una de ellas, y dice qué falla hay, no cuánto ha avanzado.</p>
+      <p class="note">Limitaciones: cada estado proviene de <strong>un solo rodamiento</strong>, en un banco de laboratorio sin carga variable y con fallas inducidas. Antes de usar el modelo en terreno habría que validarlo con otros rodamientos y otros equipos. Ante una falla distinta de las 5 conocidas elegirá igual una de ellas, y dice qué falla hay, no cuánto ha avanzado.</p>
     </div>
     <aside class="side">
       <div><div class="k">Tipo</div><div class="v">Diagnóstico de fallas por vibración</div></div>
       <div><div class="k">Herramientas</div><div class="v">Python, SciPy, scikit-learn, PyWavelets, pandas</div></div>
-      <div><div class="k">Métodos</div><div class="v">PCA, Kernel PCA y LDA, seguimiento de órdenes, envolvente, energías wavelet, bandas de frecuencia, SVM, validación dejando fuera grabaciones y perfiles de velocidad</div></div>
+      <div><div class="k">Métodos</div><div class="v">Parámetros temporales, FFT por bandas, espectrograma, PCA, Kernel PCA y LDA, energías wavelet, envolvente por órdenes, SVM, validación dejando fuera perfiles de velocidad</div></div>
       <div><div class="k">Datos</div><div class="v">Públicos: Universidad de Ottawa (Huang y Baddour, 2018)</div></div>
       <div><div class="k">Origen</div><div class="v">Diplomado Big Data Analytics, U. de Chile · Módulo 2</div></div>
     </aside>
